@@ -21,44 +21,44 @@ export default function HomeCarousel() {
 
   const [carouselHeight, setCarouselHeight] = useState<number>(0);
 
-  const seedsSlides: CarouselDate[] = [
-    {
-      id: 1,
-      imageUrl: "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a",
-      englishTitle: "First slide label",
-      englishDescription: "Fallback slide content",
-      arabicDescription: "العرض الأول",
-      arabicTitle: "العرض الأول",
-    },
-    {
-      id: 2,
-      imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
-      englishTitle: "Second slide label",
-      englishDescription: "Fallback slide content",
-      arabicDescription: "العرض التاني",
-      arabicTitle: "العرض التاني",
-    },
-    {
-      id: 3,
-      imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
-      englishTitle: "Third slide label",
-      englishDescription: "Fallback slide content",
-      arabicDescription: "العرض الثالث",
-      arabicTitle: "العرض الثالث",
-    },
-  ];
+  // const seedsSlides: CarouselDate[] = [
+  //   {
+  //     id: 1,
+  //     imageUrl: "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a",
+  //     englishTitle: "First slide label",
+  //     englishDescription: "Fallback slide content",
+  //     arabicDescription: "العرض الأول",
+  //     arabicTitle: "العرض الأول",
+  //   },
+  //   {
+  //     id: 2,
+  //     imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+  //     englishTitle: "Second slide label",
+  //     englishDescription: "Fallback slide content",
+  //     arabicDescription: "العرض التاني",
+  //     arabicTitle: "العرض التاني",
+  //   },
+  //   {
+  //     id: 3,
+  //     imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+  //     englishTitle: "Third slide label",
+  //     englishDescription: "Fallback slide content",
+  //     arabicDescription: "العرض الثالث",
+  //     arabicTitle: "العرض الثالث",
+  //   },
+  // ];
 
   const { i18n } = useTranslation();
   const lang = i18n.language || "en";
 
-  const [slides, setSlides] = useState<CarouselDate[]>(seedsSlides);
+  const [slides, setSlides] = useState<CarouselDate[]>([]);
 
   const { data, error, isLoading }: useQueryCarouselResponseType =
     useGetCarousels();
 
   useEffect(() => {
     if (data && data.length > 0) setSlides(data);
-    else setSlides(seedsSlides);
+  //   else setSlides(seedsSlides);
   }, [data]);
 
   useEffect(() => {
