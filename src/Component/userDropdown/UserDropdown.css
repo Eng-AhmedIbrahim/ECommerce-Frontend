@@ -1,0 +1,115 @@
+.dropdown-menu-custom {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px var(--box-shadow);
+  padding: 0.5rem 0;
+  margin-top: 0.6rem;
+  min-width: 10rem;
+  transition: all 0.25s ease-in-out;
+}
+
+body.light .dropdown-menu-custom {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
+body.dark .dropdown-menu-custom {
+  background-color: #1f1f1f;
+  color: var(--white-text-color);
+}
+
+.dropdown-menu-custom .dropdown-item {
+  padding: 0.55rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+body.light .dropdown-menu-custom .dropdown-item:hover {
+  background-color: var(--hover-bg-color);
+  color: var(--hover-color);
+}
+
+body.dark .dropdown-menu-custom .dropdown-item {
+  background-color: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark .dropdown-menu-custom .dropdown-item:hover,
+body.dark .dropdown-menu-custom .dropdown-item:focus {
+  background-color: rgba(79, 70, 229, 0.25) !important;
+  color: #a5b4fc !important;
+}
+
+.dropdown-menu-custom .dropdown-header {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+}
+
+body.dark .dropdown-menu-custom .dropdown-header {
+  color: #9ca3af !important;
+}
+
+.dropdown-menu-custom .dropdown-divider {
+  border-color: var(--hover-bg-color);
+}
+body.dark .dropdown-menu-custom .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mobile-bottom-nav .icons-container {
+  margin-left: 0;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+  content: none !important;
+}
+
+.icon-btn,
+.theme-btn {
+  font-size: 1.25rem;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  box-shadow: 0 4px 8px var(--box-shadow);
+  cursor: pointer;
+}
+
+
+.dropdown-info {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.dropdown-item svg {
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+
+.dropdown-menu-custom.rtl {
+  direction: rtl;
+  text-align: right;
+}
+.dropdown-menu-custom.rtl .dropdown-item {
+  text-align: right;
+}
+.dropdown-menu-custom.rtl svg {
+  margin-left: 8px;
+  margin-right: 0;
+}

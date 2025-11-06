@@ -1,0 +1,75 @@
+.carousel-control-next-icon::after , .carousel-control-prev-icon::after 
+{
+    content: none !important;
+}
+
+
+.carousel-item img
+{
+    border-radius:0 !important;
+}
+
+
+.carousel-control-next-icon::after,
+.carousel-control-prev-icon::after {
+  content: none !important;
+}
+
+.carousel-item img {
+  border-radius: 0 !important;
+}
+
+
+.carousel-image {
+  width: 100%;
+  height: calc(100vh - var(--carousel-offset, 100px)); /* نفس ارتفاع الكود */
+  object-fit: cover; /* يحافظ على الجودة والنسبة */
+  object-position: center center;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+  transition: transform 0.8s ease, filter 0.6s ease;
+  filter: brightness(1.03) contrast(1.05) saturate(1.03);
+}
+
+/* Hover تأثير أنعم */
+.carousel-image:hover {
+  transform: scale(1.03);
+  filter: brightness(1.08) contrast(1.1) saturate(1.08);
+}
+
+/* ثبات الطول */
+.carousel-item {
+  height: calc(100vh - var(--carousel-offset, 100px));
+  overflow: hidden;
+}
+
+/* تحسين للأجهزة الصغيرة */
+@media (max-width: 768px) {
+  .carousel-image {
+    height: calc(100vh - var(--carousel-offset, 80px));
+    object-fit: cover;
+  }
+}
+
+/* للشاشات الكبيرة */
+@media (min-width: 1600px) {
+  .carousel-image {
+    image-rendering: crisp-edges;
+    filter: brightness(1.04) contrast(1.08);
+  }
+}
+
+
+/* حركة ناعمة للكابتشن */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

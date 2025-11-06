@@ -1,0 +1,195 @@
+.wishlist-page {
+  padding: 40px 0;
+  width: 90%;
+  margin: auto;
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.wishlist-page h2 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 50px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--link-color), var(--link-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 15px;
+  justify-content: center;
+}
+
+.wishlist-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 25px var(--black-box-shadow);
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 300px;
+  width: 100%;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 35px var(--black-box-shadow);
+}
+
+.wishlist-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-card:hover img {
+  transform: scale(1.05);
+}
+
+.wishlist-info {
+  padding: 15px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wishlist-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.wishlist-info .price {
+  font-weight: 600;
+  color: var(--link-color);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+body.dark .wishlist-info .price {
+  color: var(--dark-btnAndlink-color-grad1);
+}
+.remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--link-color);
+  color: var(--white-text-color);
+  border: none;
+  border-radius: 50%;
+  padding: 9px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  background: var(--link-hover);
+  transform: scale(1.1);
+}
+
+body.dark .remove-btn {
+  background: linear-gradient(
+    135deg,
+    var(--dark-btnAndlink-color-grad1),
+    var(--dark-btnAndlink-color-grad2)
+  );
+}
+
+body.dark .remove-btn:hover {
+  background: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--black-box-shadow);
+}
+
+/* ✅ زرار Add to Cart */
+.add-to-cart-btn {
+  margin: 0 20px 20px;
+  background: var(--link-color);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.add-to-cart-btn:hover {
+  background: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #010101;
+}
+body.dark .add-to-cart-btn {
+  background: linear-gradient(
+    135deg,
+    var(--dark-btnAndlink-color-grad1),
+    var(--dark-btnAndlink-color-grad2)
+  );
+}
+body.dark .add-to-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #414955;
+}
+
+.no-wishlist {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 50px;
+  color: var(--text-muted, #999);
+}
+
+body.dark .wishlist-page h2 {
+  -webkit-text-fill-color: #f9fafb;
+}
+
+body.dark .no-wishlist {
+  color: #ccc;
+}
+.wishlist-heart {
+  font-size: 1.8rem;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+  fill: url(#wishlistGradient);
+}
+
+.wishlist-heart:hover {
+  transform: scale(1.15);
+}
+
+body.dark svg #wishlistGradient stop:first-child {
+  stop-color: var(--dark-btnAndlink-color-grad1);
+}
+
+body.dark svg #wishlistGradient stop:last-child {
+  stop-color: var(--dark-btnAndlink-color-grad2);
+}
+
+@media (max-width: 768px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr; /* عمود واحد */
+    gap: 20px; /* ممكن نزود شوية gap على الموبايل */
+    justify-items: center; /* يحط الكارد في النص */
+  }
+
+  .wishlist-card {
+    max-width: 90%; /* الكارد يشغل 90% من عرض الشاشة */
+  }
+}

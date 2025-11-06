@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./assets/fonts/Tajawal/Tajawal-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./assets/fonts/Tajawal/Tajawal-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("./assets/fonts/Tajawal/Tajawal-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* :root {
+  --font-family-ltr: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-rtl: "Tajawal", system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 500;
+  --bg-color: #ffffff;
+  --text-color: #1e293b;
+  --link-color: #3b82f6;
+  --link-hover: #1d4ed8;
+  --button-bg: #f3f4f6;
+  --button-text: #213547;
+  --button-border: #d1d5db;
+  --button-hover-bg: #e5e7eb;
+  --button-hover-text: #111827;
+  --button-hover-border: #3b82f6;
+  --dark-btnAndlink-color-grad1: #a1a1aa;
+  --dark-btnAndlink-color-grad2: #4b5563;
+  --dark-p-color :#96a5bb;
+  --text-muted:#999;
+  --starts-color:#ccc;
+  --start-filled-collor:#facc15;
+  --discount-color:#e53935;
+  --stock-in-color:#2e7d32;
+  --stock-in-bg-color:#c8e6c9;
+  --stock-out-color:#c62828;
+  --stock-out-bg-color:#ffcdd2;
+  --box-shadow: rgba(31, 128, 190, 0.3);
+  --black-box-shadow:rgba(0, 0, 0, 0.08);
+  --review-comment-color:#333;
+  --review-date:#666;
+  --signIn-first-bg-color:#667eea;
+  --signIn-second-bg-color:#56119f;
+  --signIn-third-bg-color:#4c2799;
+  --signin-page-container-first-grade: rgba(120, 119, 198, 0.3);
+  --signin-page-container-second-grade: rgba(255, 119, 198, 0.3);
+  --signin-page-container-third-grade: rgba(120, 219, 255, 0.2);
+  --premium-card-second-color:#764ba2;
+  --premium-card-third-color:#f093fb;
+  --primary-bg-panel-before-color-first: rgba(255, 255, 255, 0.1);
+  --primary-bg-panel-before-color-second: rgba(255, 255, 255, 0.08);
+  --premium-card-bg-color:rgba(255, 255, 255, 0.98);
+  --premium-card-box-shadow-first-color:rgba(0, 0, 0, 0.12);
+  --premium-card-box-shadow-second-color:rgba(0, 0, 0, 0.08);
+  --premium-card-box-shadow-third-color:rgba(0, 0, 0, 0.04);
+  --premium-card-box-shadow-forth-color:rgba(255, 255, 255, 0.9);
+  --signin-border-permium-card:rgba(255, 255, 255, 0.3);
+  --logo-placeholder-color:rgba(255, 255, 255, 0.15);
+  --logo-placeholder-box-shadow:rgba(255, 255, 255, 0.4);
+  --custom-signin-button-first-box-shadow:rgba(102, 126, 234, 0.4);
+  --custom-signin-button-second-box-shadow:rgba(102, 126, 234, 0.2);
+  --custom-signin-button-after:rgba(255, 255, 255, 0.2);
+  --custom-signin-button-hover-first:#5a67d8;
+  --custom-signin-button-hover-second:#6b46c1;
+  --custom-signin-button-hover-box-shadow:rgba(102, 126, 234, 0.6);
+  --social-icon-button-google-hover-1 :rgba(66, 133, 244, 0.25);
+  --social-icon-button-google-hover-2 :rgba(66, 133, 244, 0.15);
+  --social-icon-button-google-hover-3 :rgba(255, 255, 255, 1);
+  --profile-picture-uploader-second-color:#06b6d4;
+  --profile-picture-uploader-third-color:#1e40af;
+  --profile-picture-uploader-third-color-box-shadow-1:rgba(59, 130, 246, 0.3) ;
+  --profile-picture-uploader-third-color-box-shadow-2: rgba(255, 255, 255, 0.2);
+
+
+  --cart-header-bg-color:#1a448f;
+  --white-text-color:#fff;
+  --cart-remove-btn-color: #ef4444;
+  --cart-summary-p:#444;
+
+
+  --search-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --border-color: #ccc;
+  --text-color: #222;
+  --accent-color: #1f80be;
+  --close-bg: #f0f0f0;
+  --close-hover: #ddd;
+  --close-color: #333;
+
+
+  --hover-color: #4f46e5;
+  --hover-bg-color: rgba(79, 70, 229, 0.1);
+
+} */
+
+
+:root {
+  --font-family-ltr: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-rtl: "Tajawal", system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 500;
+  --bg-color: #ffffff;
+  --text-color: #1e293b;
+  --link-color: #fc3636;
+  --link-hover: #d20000;
+  --button-bg: #f3f4f6;
+  --button-text: #213547;
+  --button-border: #d1d5db;
+  --button-hover-bg: #e5e7eb;
+  --button-hover-text: #111827;
+  --button-hover-border: #fc3636;
+  --dark-btnAndlink-color-grad1: #a1a1aa;
+  --dark-btnAndlink-color-grad2: #4b5563;
+  --dark-p-color :#96a5bb;
+  --text-muted:#999;
+  --starts-color:#ccc;
+  --start-filled-collor:#facc15;
+  --discount-color:#e53935;
+  --stock-in-color:#2e7d32;
+  --stock-in-bg-color:#c8e6c9;
+  --stock-out-color:#c62828;
+  --stock-out-bg-color:#ffcdd2;
+  --box-shadow: rgba(31, 128, 190, 0.3);
+  --black-box-shadow:rgba(0, 0, 0, 0.08);
+  --review-comment-color:#333;
+  --review-date:#666;
+  --signIn-first-bg-color:#667eea;
+  --signIn-second-bg-color:#56119f;
+  --signIn-third-bg-color:#4c2799;
+  --signin-page-container-first-grade: rgba(120, 119, 198, 0.3);
+  --signin-page-container-second-grade: rgba(255, 119, 198, 0.3);
+  --signin-page-container-third-grade: rgba(120, 219, 255, 0.2);
+  --premium-card-second-color:#764ba2;
+  --premium-card-third-color:#f093fb;
+  --primary-bg-panel-before-color-first: rgba(255, 255, 255, 0.1);
+  --primary-bg-panel-before-color-second: rgba(255, 255, 255, 0.08);
+  --premium-card-bg-color:rgba(255, 255, 255, 0.98);
+  --premium-card-box-shadow-first-color:rgba(0, 0, 0, 0.12);
+  --premium-card-box-shadow-second-color:rgba(0, 0, 0, 0.08);
+  --premium-card-box-shadow-third-color:rgba(0, 0, 0, 0.04);
+  --premium-card-box-shadow-forth-color:rgba(255, 255, 255, 0.9);
+  --signin-border-permium-card:rgba(255, 255, 255, 0.3);
+  --logo-placeholder-color:rgba(255, 255, 255, 0.15);
+  --logo-placeholder-box-shadow:rgba(255, 255, 255, 0.4);
+  --custom-signin-button-first-box-shadow:rgba(102, 126, 234, 0.4);
+  --custom-signin-button-second-box-shadow:rgba(102, 126, 234, 0.2);
+  --custom-signin-button-after:rgba(255, 255, 255, 0.2);
+  --custom-signin-button-hover-first:#5a67d8;
+  --custom-signin-button-hover-second:#6b46c1;
+  --custom-signin-button-hover-box-shadow:rgba(102, 126, 234, 0.6);
+  --social-icon-button-google-hover-1 :rgba(66, 133, 244, 0.25);
+  --social-icon-button-google-hover-2 :rgba(66, 133, 244, 0.15);
+  --social-icon-button-google-hover-3 :rgba(255, 255, 255, 1);
+  --profile-picture-uploader-second-color:#06b6d4;
+  --profile-picture-uploader-third-color:#1e40af;
+  --profile-picture-uploader-third-color-box-shadow-1:rgba(59, 130, 246, 0.3) ;
+  --profile-picture-uploader-third-color-box-shadow-2: rgba(255, 255, 255, 0.2);
+
+
+  /*cart*/
+  --cart-header-bg-color:#fc3636;
+  --white-text-color:#fff;
+  --cart-remove-btn-color: #ef4444;
+  --cart-summary-p:#444;
+
+
+  /*searchDialog*/
+  --search-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --border-color: #ccc;
+  --text-color: #222;
+  --accent-color: #fc3636;
+  --close-bg: #f0f0f0;
+  --close-hover: #ddd;
+  --close-color: #333;
+
+
+  --hover-color: #fc3636;
+  --hover-bg-color: rgba(79, 70, 229, 0.1);
+
+}
+
+[dir="rtl"] {
+  font-family: var(--font-family-rtl);
+  direction: rtl;
+  text-align: right;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[dir="ltr"] {
+  font-family: var(--font-family-ltr);
+  direction: ltr;
+  text-align: left;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: var(
+    --font-family,
+    system-ui,
+    Avenir,
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+}
+
+.navbar-custom {
+  flex-shrink: 0;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.5em 0;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid var(--button-border);
+  padding: 0.7em 1.4em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.25s,
+    box-shadow 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--button-hover-text);
+  border-color: var(--button-hover-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+body.dark {
+  --bg-color: #121212;
+  --text-color: #f9fafb;
+  --link-color: #a1a1aa;
+  --link-hover: #dcdce4;
+  --button-bg: #1f2937;
+  --button-text: #f9fafb;
+  --button-border: #374151;
+  --button-hover-bg: #2563eb;
+  --button-hover-text: #ffffff;
+  --button-hover-border: #3b82f6;
+  --card-bg: #1e1e1e;
+   --search-bg: #1e1e1e;
+  --input-bg: #2a2a2a;
+  --border-color: #444;
+  --text-color: #f5f5f5;
+  --accent-color: #4dabf7;
+  --close-bg: #2a2a2a;
+  --close-hover: #3a3a3a;
+  --close-color: #f5f5f5;
+
+   --hover-color: #8b9ae3;
+  --hover-bg-color: rgba(79, 70, 229, 0.25);
+}

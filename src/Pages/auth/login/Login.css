@@ -1,0 +1,1093 @@
+.signin-page-container {
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color) 0%,
+    var(--signIn-second-bg-color) 50%,
+    var(--signIn-third-bg-color) 100% 100%
+  ) !important;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* إضافة تأثيرات خلفية متحركة */
+.signin-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      var(--signin-page-container-first-grade) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      var(--signin-page-container-second-grade) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      var(--signin-page-container-third-grade) 0%,
+      transparent 50%
+    );
+  animation: backgroundShift 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.signin-page-container {
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+/* تحسين الارتفاع للشاشات الكبيرة والمتوسطة */
+@media (min-width: 768px) {
+  .signin-page-container {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0.5rem 0;
+  }
+
+  .premium-card {
+    padding: 0px;
+    height: 95vh;
+    max-height: 95vh;
+  }
+
+  .primary-bg-panel {
+    height: 95vh;
+    max-height: 95vh;
+  }
+
+  /* تحسين تخطيط الفورم */
+  .premium-card .col-md-7 {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding: 1.5rem !important;
+  }
+
+  /* تقليل المساحات في الفورم */
+  .premium-card .col-md-7 h3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .premium-card .col-md-7 p {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .premium-card .col-md-7 .form-group {
+    margin-bottom: 1rem !important;
+  }
+}
+
+.premium-card {
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: var(--premium-card-bg-color);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 32px 64px var(--premium-card-box-shadow-first-color),
+    0 16px 32px var(--premium-card-box-shadow-second-color),
+    0 8px 16px var(--premium-card-box-shadow-third-color),
+    inset 0 1px 0 var(--premium-card-box-shadow-forth-color);
+  border: 1px solid var(--signin-border-permium-card) !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: cardSlideIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.premium-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color),
+    var(--premium-card-second-color),
+    var(--premium-card-third-color)
+  );
+  border-radius: 30px;
+  z-index: -1;
+  opacity: 0;
+  animation: cardGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9) rotateX(10deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-10px) scale(1.02) rotateX(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+}
+
+.primary-bg-panel {
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color) 0%,
+    var(--premium-card-second-color) 50%,
+    var(--premium-card-third-color) 100%
+  );
+  color: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 3rem 2rem !important;
+  overflow: hidden;
+}
+
+.primary-bg-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 20%,
+      var(--primary-bg-panel-before-color-first) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 80%,
+      var(--primary-bg-panel-before-color-second) 0%,
+      transparent 50%
+    );
+  animation: panelShimmer 8s ease-in-out infinite;
+}
+
+@keyframes panelShimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Logo Animation & Placement */
+.logo-placeholder {
+  font-size: 2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 15;
+  animation: logoSlideIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  background: var(--logo-placeholder-color);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  border: 2px solid var(--signin-border-permium-card);
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px var(--premium-card-box-shadow-first-color),
+    inset 0 1px 0 var(--logo-placeholder-box-shadow);
+  transition: all 0.3s ease;
+}
+
+.logo-placeholder:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 16px 48px var(--premium-card-box-shadow-first-color),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background: var(--custom-signin-button-after);
+}
+
+.logo-icon {
+  font-size: 3.2rem;
+  margin-inline-end: 1rem;
+  animation: logoGlow 4s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 15px var(--logo-placeholder-box-shadow));
+  transition: all 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6));
+}
+
+@keyframes logoGlow {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 15px var(--logo-placeholder-box-shadow));
+  }
+  100% {
+    transform: scale(1.08) rotate(2deg);
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.7));
+  }
+}
+
+@keyframes logoSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Abstract Illustration Styling */
+.illustration-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.abstract-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15; /* زيادة الشفافية قليلاً */
+  background: linear-gradient(
+    45deg,
+    var(--signin-border-permium-card),
+    var(--primary-bg-panel-before-color-first)
+  );
+  filter: blur(8px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  bottom: 15%;
+  left: 5%;
+  animation-delay: 2s;
+}
+
+.abstract-figure {
+  position: relative;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+  z-index: 5;
+  animation: figureFloat 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+@keyframes figureFloat {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+/* === 4. Form Input Styling === */
+.custom-input-group {
+  border: 2px solid var(--custom-signin-button-second-box-shadow);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--premium-card-box-shadow-forth-color);
+  backdrop-filter: blur(15px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 6px 20px var(--premium-card-box-shadow-second-color);
+  position: relative;
+}
+
+/* تأثير متوهج للحقول */
+.custom-input-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.05),
+    rgba(240, 147, 251, 0.05)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.custom-input-group:hover {
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  transform: translateY(-3px) scale(1.01);
+}
+
+.custom-input-group:hover::before {
+  opacity: 1;
+}
+
+.custom-input-group:focus-within {
+  border-color: var(--signIn-first-bg-color);
+  box-shadow: 0 0 0 4px var(--custom-signin-button-second-box-shadow),
+    0 12px 32px rgba(102, 126, 234, 0.25);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.custom-input-group:focus-within::before {
+  opacity: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1),
+    rgba(240, 147, 251, 0.1)
+  );
+}
+
+.custom-input-group .form-control {
+  border: none;
+  padding: 1rem 0.8rem;
+  height: auto;
+  font-size: 0.95rem;
+  background-color: transparent !important;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+/* تقليل padding في الشاشات الكبيرة */
+@media (min-width: 768px) {
+  .custom-input-group .form-control {
+    padding: 0.8rem 0.7rem;
+    font-size: 0.9rem;
+  }
+}
+
+.custom-input-group .form-control::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+.custom-input-icon {
+  align-self: center;
+  margin-inline-start: 1.2rem;
+  margin-inline-end: 0.8rem;
+  color: #a0aec0;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+/* تفاعل الأيقونة عند التركيز */
+.custom-input-group:focus-within .custom-input-icon {
+  color: var(--signIn-first-bg-color);
+  transform: scale(1.1);
+}
+
+/* === 5. Sign In Button with Animation === */
+.custom-signin-button {
+  padding: 1.2rem 2rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color) 0%,
+    var(--premium-card-second-color) 100%
+  ) !important;
+  border: none !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 32px var(--custom-signin-button-first-box-shadow),
+    0 6px 16px var(--custom-signin-button-second-box-shadow),
+    inset 0 1px 0 var(--signin-border-permium-card) !important;
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* تأثير متوهج للزر */
+.custom-signin-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    var(--custom-signin-button-after),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* تقليل حجم الزر في الشاشات الكبيرة */
+@media (min-width: 768px) {
+  .custom-signin-button {
+    padding: 0.9rem 1.3rem !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+.custom-signin-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--custom-signin-button-after),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.custom-signin-button:hover::before {
+  left: 100%;
+}
+
+.custom-signin-button:hover {
+  background: linear-gradient(
+    135deg,
+    var(--custom-signin-button-hover-first) 0%,
+    var(--custom-signin-button-hover-second) 100%
+  ) !important;
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 20px 48px var(--custom-signin-button-hover-box-shadow),
+    0 10px 24px var(--custom-signin-button-first-box-shadow),
+    inset 0 1px 0 var(--logo-placeholder-box-shadow) !important;
+}
+
+.custom-signin-button:hover::after {
+  opacity: 1;
+}
+
+.custom-signin-button:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+.button-arrow {
+  transition: all 0.3s ease-in-out;
+  margin-left: 0.5rem;
+}
+
+.custom-signin-button:hover .button-arrow {
+  transform: translateX(4px) scale(1.1);
+}
+
+/* === 6. Social Login === */
+.social-icon-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  border: 2px solid var(--logo-placeholder-box-shadow) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 12px 32px var(--premium-card-box-shadow-first-color),
+    0 6px 16px var(--premium-card-box-shadow-second-color),
+    inset 0 1px 0 var(--premium-card-box-shadow-forth-color);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* تأثير متوهج للأزرار */
+.social-icon-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    var(--signin-border-permium-card),
+    var(--primary-bg-panel-before-color-first)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 18px;
+}
+
+.social-icon-button:hover {
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18),
+    0 12px 24px var(--premium-card-box-shadow-first-color),
+    inset 0 1px 0 var(--social-icon-button-google-hover-3) !important;
+  transform: translateY(-8px) scale(1.1);
+}
+
+.social-icon-button:hover::before {
+  opacity: 1;
+}
+
+.social-icon-button:active {
+  transform: translateY(-3px) scale(1.04);
+}
+
+/* Google Button Specific */
+.social-icon-button.google:hover {
+  box-shadow: 0 15px 35px var(--social-icon-button-google-hover-1),
+    0 8px 20px var(--social-icon-button-google-hover-2),
+    inset 0 1px 0 var(--social-icon-button-google-hover-3) !important;
+}
+
+/* Facebook Button Specific */
+.social-icon-button.facebook:hover {
+  box-shadow: 0 15px 35px var(--social-icon-button-google-hover-1),
+    0 8px 20px var(--social-icon-button-google-hover-2),
+    inset 0 1px 0 var(--social-icon-button-google-hover-3) !important;
+}
+
+/* === 7. Responsive Adjustments === */
+@media (max-width: 767px) {
+  .primary-bg-panel {
+    display: none !important;
+  }
+  .premium-card .col-md-7 {
+    width: 100%;
+  }
+  .premium-card {
+    border-radius: 20px !important;
+    margin: 1rem;
+    height: auto !important;
+    max-height: none !important;
+  }
+  .signin-page-container {
+    padding: 1rem 0;
+    align-items: flex-start;
+    height: auto !important;
+    min-height: 100vh;
+  }
+  .custom-input-group .form-control {
+    padding: 1rem 0.8rem;
+  }
+  .custom-signin-button {
+    padding: 1rem 1.5rem !important;
+  }
+}
+
+/* تحسينات إضافية للشاشات الكبيرة جداً */
+@media (min-width: 1200px) {
+  .premium-card {
+    max-width: 1100px;
+  }
+
+  .premium-card .col-md-7 {
+    padding: 2rem !important;
+  }
+
+  .custom-input-group .form-control {
+    padding: 0.9rem 0.8rem;
+    font-size: 0.95rem;
+  }
+}
+
+.form-check-input:checked {
+  background-color: var(--signIn-first-bg-color) !important;
+  border-color: var(--signIn-first-bg-color) !important;
+}
+
+.form-check-input:focus {
+  border-color: var(--signIn-first-bg-color) !important;
+  box-shadow: 0 0 0 0.25rem var(--social-icon-button-google-hover-2) !important;
+}
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.signin-page-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.signin-page-container::-webkit-scrollbar-track {
+  background: var(--primary-bg-panel-before-color-first);
+  border-radius: 10px;
+}
+
+.signin-page-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color),
+    var(--premium-card-second-color)
+  );
+  border-radius: 10px;
+}
+
+.signin-page-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    135deg,
+    var(--custom-signin-button-hover-first),
+    var(--custom-signin-button-hover-second)
+  );
+}
+
+.illustration-layout {
+  background: linear-gradient(135deg, #f0f4ff, #dbe7ff);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* اللوجو اللي فوق */
+.illustration-layout .logo-img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+}
+
+.illustration-wrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.illustration-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0f4ff, #dbe7ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* أشكال ديكورية */
+.abstract-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  animation: floatShape 10s infinite ease-in-out alternate;
+}
+
+.shape-1 {
+  width: 250px;
+  height: 250px;
+  background: var(--signIn-first-bg-color);
+  top: -80px;
+  left: -60px;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--premium-card-second-color);
+  bottom: -90px;
+  right: -70px;
+}
+
+/* اللوجو */
+.abstract-figure {
+  position: relative;
+  z-index: 2;
+}
+
+.logo-img {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+  animation: floatLogo 5s ease-in-out infinite;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 10;
+}
+
+.logo-img:hover {
+  transform: scale(1.08) rotateY(5deg);
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+}
+
+/* إضافة تأثير متوهج للوجو */
+.logo-img::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(
+    45deg,
+    var(--primary-bg-panel-before-color-first),
+    transparent
+  );
+  border-radius: 50%;
+  opacity: 0;
+  animation: logoPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.1);
+  }
+}
+
+/* حركات ناعمة */
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes floatShape {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(30px, -30px);
+  }
+}
+
+.error-popup {
+  position: absolute;
+  left: 10px;
+  bottom: calc(100% + 8px);
+  top: auto;
+  background: #ff4d4f;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  z-index: 50;
+  white-space: normal;
+  max-width: 320px;
+  word-break: break-word;
+  animation: fadeInPopup 0.18s ease-in-out;
+}
+
+.error-popup.multi {
+  padding: 8px 12px;
+}
+
+.error-popup::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  background: #ff4d4f;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 6px var(--premium-card-box-shadow-first-color);
+}
+
+.error-list {
+  margin: 0;
+  padding-left: 1rem;
+  color: #fff;
+}
+.error-list li {
+  margin: 0.12rem 0;
+  font-size: 0.82rem;
+  opacity: 0.95;
+}
+
+@keyframes fadeInPopup {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-input-group .form-control.is-invalid {
+  border-color: #ff4d4f !important;
+  box-shadow: 0 0 0 4px rgba(244, 77, 79, 0.08) !important;
+}
+
+.popup-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f44336;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  font-weight: 500;
+  animation: fadeInOut 4s ease forwards;
+}
+
+.popup-message.success {
+  background-color: #4caf50;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* === 1. Background & Layout === */
+.signup-page-container {
+  background: linear-gradient(
+    135deg,
+    var(--signIn-first-bg-color) 0%,
+    var(--signIn-second-bg-color) 50%,
+    var(--signIn-third-bg-color) 100%
+  ) !important;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* إضافة تأثيرات خلفية متحركة */
+.signup-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      var(--signin-page-container-first-grade) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      var(--signin-page-container-second-grade) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      var(--signin-page-container-third-grade) 0%,
+      transparent 50%
+    );
+  animation: backgroundShift 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.signup-page-container {
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .signup-page-container {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0.5rem 0;
+  }
+
+  .premium-card {
+    padding: 0px;
+    height: 95vh;
+    max-height: 95vh;
+  }
+
+  .primary-bg-panel {
+    height: 95vh;
+    max-height: 95vh;
+  }
+
+  /* تحسين تخطيط الفورم */
+  .premium-card .col-md-7 {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding: 1.5rem !important;
+  }
+
+  /* تقليل المساحات في الفورم */
+  .premium-card .col-md-7 h3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .premium-card .col-md-7 p {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .premium-card .col-md-7 .form-group {
+    margin-bottom: 1rem !important;
+  }
+
+  .premium-card .col-md-7 .row.g-3 {
+    gap: 0.75rem !important;
+  }
+
+  .premium-card .col-md-7 .row.g-3 > * {
+    padding: 0.375rem !important;
+  }
+}
+
+.profile-picture-uploader {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid transparent;
+  background: linear-gradient(
+      45deg,
+      var(--link-color),
+      var(--profile-picture-uploader-second-color),
+      var(--profile-picture-uploader-third-color)
+    )
+    border-box;
+  cursor: pointer;
+  box-shadow: 0 8px 25px
+      var(--profile-picture-uploader-third-color-box-shadow-1),
+    inset 0 1px 0 var(--profile-picture-uploader-third-color-box-shadow-2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.profile-picture-uploader::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(
+    45deg,
+    var(--link-color),
+    var(--profile-picture-uploader-second-color),
+    var(--profile-picture-uploader-third-color)
+  );
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.profile-picture-uploader:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 15px 35px var(--social-icon-button-google-hover-1),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-uploader > div {
+  width: 100%;
+  height: 100%;
+  font-size: 0.9rem;
+  background: var(--bg-color);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}

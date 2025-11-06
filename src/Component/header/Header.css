@@ -1,0 +1,313 @@
+.navbar-brand-custom {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.2rem; /* كبر الخط */
+  color: var(--primary-color);
+  font-weight: 700; /* سمّك الخط أكتر */
+  font-style: italic;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* يدي عمق للكتابة */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-brand-custom:hover {
+  color: var(--hover-color);
+  transform: scale(1.07);
+  text-shadow: 0 3px 8px rgba(79, 70, 229, 0.3); /* تأثير لطيف عند الهوفر */
+}
+
+.navbar-custom {
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 0.75rem 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+body.light .navbar-custom {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.dark .navbar-custom {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
+}
+
+.navbar-custom .nav-link {
+  color: inherit;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: var(--link-hover);
+  transform: translateY(-1px);
+}
+
+body.dark .navbar-custom .nav-link:hover {
+  color: var(--hover-color);
+}
+
+.navbar-custom .navbar-brand {
+  color: inherit;
+  font-weight: 700;
+  font-size: 1.5rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: var(--link-hover);
+  transform: scale(1.05);
+}
+
+body.dark .navbar-custom .navbar-brand:hover {
+  color: var(--dark-btnAndlink-color-grad2);
+}
+
+.icon-btn,
+.theme-btn,
+.user-btn {
+  font-size: 1.25rem;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 5px 8px rgba(79, 70, 229, 0.3);
+  position: relative;
+  z-index: 2000;
+}
+
+.icon-btn:hover,
+.theme-btn:hover,
+.user-btn:hover {
+  background: var(--button-hover-bg);
+  color: var(--link-color);
+  transform: scale(1.12);
+  box-shadow: 0 8px 12px rgba(79, 70, 229, 0.4);
+}
+
+body.dark .icon-btn,
+body.dark .theme-btn,
+body.dark .user-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dark-text-color);
+}
+
+body.dark .icon-btn:hover,
+body.dark .theme-btn:hover,
+body.dark .user-btn:hover {
+  background: rgba(79, 70, 229, 0.25);
+  color: var(--dark-btnAndlink-color-grad2);
+}
+
+.dropdown-menu-custom {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+  padding: 0.5rem 0;
+  margin-top: 0.6rem;
+  min-width: 10rem;
+  transition: all 0.25s ease-in-out;
+}
+
+body.light .dropdown-menu-custom {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.dark .dropdown-menu-custom {
+  background-color: var(--dark-bg-color-alt);
+  color: var(--dark-text-color);
+}
+
+.dropdown-menu-custom .dropdown-item {
+  padding: 0.55rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+body.light .dropdown-menu-custom .dropdown-item:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--link-color);
+}
+
+body.dark .dropdown-menu-custom .dropdown-item:hover {
+  background-color: rgba(79, 70, 229, 0.25);
+  color: var(--dark-btnAndlink-color-grad2);
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.75rem;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 992px) {
+  .navbar-custom .icons-container {
+    display: none;
+  }
+
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    background-color: var(--bottom-nav-bg);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.6rem 0.5rem;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 1050;
+    border-radius: 12px 12px 0 0;
+    backdrop-filter: blur(10px);
+    animation: slide-up 0.3s ease-out;
+  }
+
+  body.light .mobile-bottom-nav {
+    --bottom-nav-bg: var(--bg-color);
+  }
+
+  body.dark .mobile-bottom-nav {
+    --bottom-nav-bg: var(--dark-bg-color);
+  }
+
+  .mobile-bottom-nav .icon-btn,
+  .mobile-bottom-nav .theme-btn {
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 1.25rem;
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.search-style {
+  position: relative;
+}
+
+.search-style .search-input {
+  width: 220px;
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  padding: 0.45rem 1rem 0.45rem 2.5rem;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+body.dark .search-style .search-input {
+  background-color: var(--dark-input-bg);
+  color: var(--dark-text-color);
+  border-color: var(--dark-border-color);
+}
+
+.search-style .search-input:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.3);
+}
+
+.search-style .icon-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  box-shadow: none;
+  font-size: 1rem;
+  color: var(--link-color);
+  z-index: 2;
+}
+
+.search-style .icon-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  color: var(--dark-btnAndlink-color-grad1);
+}
+
+.navbar-custom {
+  margin-bottom: 0 !important;
+}
+
+.navbar-custom {
+  background-color: var(--bg-color);
+  z-index: 1050;
+}
+
+body {
+  padding-top: 70px;
+}
+
+.nav-links-container {
+  order: 1;
+}
+[dir="rtl"] .nav-links-container {
+  margin-right: 14px !important;
+}
+
+.search-form-container {
+  order: 2;
+  margin: 0 0.5rem;
+}
+
+[dir="rtl"] .search-form-container {
+  margin-left: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.header-actions-container {
+  order: 3;
+  margin: 0 0.5rem;
+}
+
+.language-theme-container {
+  order: 4;
+}
+
+.search-style .search-input {
+  width: 220px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 0.45rem 2.5rem 0.45rem 1rem;
+}
+[dir="rtl"] .search-style .search-input {
+  direction: rtl;
+  text-align: right;
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+}
+.search-style .icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  box-shadow: none;
+  font-size: 1rem;
+  color: var(--link-color);
+  z-index: 2;
+}
+[dir="rtl"] .search-style .icon-btn {
+  left: 4px;
+  right: auto;
+}

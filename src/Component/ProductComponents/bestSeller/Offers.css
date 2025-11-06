@@ -1,0 +1,53 @@
+.offers-section {
+  padding: 80px 0;
+  color: var(--text-color);
+}
+
+.offer-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.offer-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--link-color);
+  margin-bottom: 10px;
+}
+
+.offer-header p {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* 🔹 الشبكة */
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* موبايل */
+  gap: 30px;
+  justify-items: center;
+  padding: 0 15px;
+}
+
+/* تابلت */
+@media (min-width: 768px) {
+  .offers-grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 40px;
+  }
+}
+
+/* ديسكتوب */
+@media (min-width: 1200px) {
+  .offers-grid {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 80px;
+  }
+}
+
+/* Extra Large */
+@media (min-width: 1600px) {
+  .offers-grid {
+    padding: 0 120px;
+  }
+}

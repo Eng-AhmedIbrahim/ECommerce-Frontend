@@ -1,0 +1,97 @@
+.product-section {
+  margin-top: 25px;
+  padding: 30px 0;
+  background: var(--bg-color);
+  transition: background 0.3s ease;
+}
+
+.container {
+  width: 100% !important;
+  margin: 0 auto;
+  max-width: 1300px;
+}
+
+.product-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+  margin-bottom: 10px;
+}
+
+.product-header h2 {
+  font-size: 1.5rem;
+  font-weight: 750;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin: auto;
+}
+body.light .product-header h2 {
+  background: linear-gradient(135deg, var(--link-color), var(--link-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.product-scroll {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  padding-top: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--link-color) transparent;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .product-scroll > * {
+    flex: 0 0 calc(33.333% - 1.333vw);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-scroll > * {
+    flex: 0 0 calc(25% - 1.5vw);
+  }
+}
+
+.product-scroll > *:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px var(--black-box-shadow);
+}
+
+.product-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+
+.product-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.dark .product-header h2 {
+  text-align: center !;
+  background: linear-gradient(135deg, #c2c2cb, #4b5563);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark .product-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #c2c2cb, #4b5563);
+}
+
+.no-products-text {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 500;
+}

@@ -1,0 +1,112 @@
+/* ==================================== */
+/* الأنماط العامة (تنطبق على body.light و body.dark) */
+/* ==================================== */
+
+.error-page-container {
+    /* الارتفاع لحل مشكلة السكرول (يجب تعديل 70px لارتفاع الهيدر لديك) */
+    min-height: calc(100vh - 70px); 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.error-page-card {
+    /* أنماط البطاقة الأساسية */
+    border-radius: 2rem; /* borderRadius */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15); /* boxShadow */
+}
+
+.error-page-icon {
+    font-size: 3.5rem;
+}
+
+.error-page-button {
+    border-radius: 0.75rem !important;
+    padding: 0.6rem 1.5rem !important;
+}
+
+/* ==================================== */
+/* أنماط الوضع الفاتح (Light Mode) - body.light */
+/* ==================================== */
+
+body.light .error-page-container {
+    background-color: #f8f9fa; /* bg-light */
+    color: #212529; /* text-dark */
+}
+
+body.light .error-page-card {
+    border: 2px solid #e9ecef; /* border-light */
+    background-color: #fff; /* bg-white */
+}
+
+body.light .error-page-icon {
+    color: #dc3545; /* text-danger */
+}
+
+body.light .error-page-card .text-muted {
+    color: #6c757d !important; /* لون النص الثانوي */
+}
+
+body.light .error-page-button {
+    background-color: #17a2b8; /* btn-info */
+    border-color: #17a2b8;
+}
+
+/* ==================================== */
+/* أنماط الوضع الداكن (Dark Mode) - body.dark */
+/* ==================================== */
+
+body.dark .error-page-container {
+    background-color: #161b22; 
+    color: #f8f9fa; /* text-light */
+}
+
+body.dark .error-page-card {
+    /* لون بطاقة داكن مميز */
+    background-color: #21262d; 
+    border: none; /* إزالة الحدود */
+    /* ظل أبيض خفيف وواضح */
+    box-shadow: 0 0 35px rgba(100, 100, 100, 0.4); 
+}
+
+body.dark .error-page-card .card-title {
+    color: #f8f9fa !important; /* فرض اللون الفاتح على العنوان */
+}
+
+/* لون النص الثانوي (الرسالة التفصيلية) في الدارك مود */
+body.dark .error-page-card .card-text-muted{
+    color: #b0b5bb !important; 
+}
+
+body.dark .error-page-icon {
+    /* لون أحمر أفتح وأكثر وضوحاً */
+    color: #ff8c8c; 
+}
+
+body.dark .error-page-button {
+    background-color: #0d6efd; /* btn-primary */
+    border-color: #0d6efd;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.error-page-card {
+  border-radius: 1.25rem;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+/* Light Mode */
+body.light .error-page-card {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+body.dark .error-page-card {
+  background-color: #21262d;
+  border: none;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.05);
+}
+
+.text-muted
+{
+    color: rgb(128, 123, 123) !important;
+}

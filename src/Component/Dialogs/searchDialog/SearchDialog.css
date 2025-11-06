@@ -1,0 +1,114 @@
+/* Overlay (شفاف بدون تأثير على الخلفية) */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 999;
+}
+
+/* محتوى السيرش ينزل من فوق */
+.search-content {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  width: 100%;
+  max-width: 600px;
+  background: var(--search-bg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 20px 20px;
+  padding: 1rem 1.5rem;
+  animation: slideDown 0.3s ease forwards;
+  z-index: 1000;
+}
+
+/* العنوان أو الهيدر */
+.search-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* مربع البحث */
+.search-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+}
+
+/* زر الإغلاق */
+.close-btn {
+  background: var(--close-bg);
+  color: var(--close-color);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: var(--close-hover);
+  /* transform: rotate(90deg); */
+  transform: scale(1.2);
+}
+
+@keyframes slideDown {
+  to {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .search-content {
+    width: 95%;
+    padding: 0.8rem 1rem;
+  }
+}
+
+.dropdown-menu-custom {
+  min-width: 180px;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu-custom.light {
+  background: #ffffff;
+  color: #222;
+}
+
+.dropdown-menu-custom.dark {
+  background: #1f2937;
+  color: #f1f1f1;
+}
+
+.dropdown-menu-custom .dropdown-item {
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu-custom .dropdown-item:hover {
+  background-color: rgba(31, 128, 190, 0.1);
+}
+
+.dropdown-menu-custom .dropdown-header {
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem;
+}

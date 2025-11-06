@@ -1,0 +1,534 @@
+/* ====== Page Layout ====== */
+.checkout-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  background-color: var(--bg-color);
+  padding: 2.5rem;
+  font-family: "Inter", sans-serif;
+  width: 85%;
+  margin: auto;
+}
+
+/* ====== Left Form Section ====== */
+.checkout-form {
+  flex: 2;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  transition: transform 0.2s ease;
+}
+
+.checkout-form:hover {
+  transform: translateY(-2px);
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+  border-color: #1f80be;
+  box-shadow: 0 0 0 3px rgba(31, 128, 190, 0.15);
+  outline: none;
+}
+
+/* Flex rows for name, city, etc. */
+.row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #4b5563;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  accent-color: #1f80be;
+}
+
+/* ====== Shipping Box ====== */
+.shipping-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+}
+
+.shipping-box:hover {
+  background: #eef7ff;
+}
+
+.shipping-box .price {
+  font-weight: 600;
+  color: #1f80be;
+}
+
+/* ====== Payment Options ====== */
+.payment-option {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  transition: all 0.25s ease;
+}
+
+.payment-option:hover {
+  background-color: var(--bg-color);
+  border-color: #1f80be;
+}
+
+.payment-option.active {
+  border: 2px solid #1f80be;
+    background-color: var(--bg-color);
+}
+
+.option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option-header span {
+  font-weight: 500;
+}
+
+.card-icons {
+  display: flex;
+  gap: 8px;
+  color: #2563eb;
+}
+
+.card-details input {
+  margin-top: 8px;
+}
+
+/* ====== Pay Button ====== */
+.pay-button {
+  background-color: var(--bg-color);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(31, 128, 190, 0.25);
+}
+
+.pay-button:hover {
+  background-color: var(--bg-color);
+  box-shadow: 0 6px 18px rgba(31, 128, 190, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ====== Right Order Summary ====== */
+.order-summary {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 1.8rem;
+  height: fit-content;
+  align-self: flex-start;
+}
+
+.order-summary h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-image {
+  width: 52px;
+  height: 52px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.item-details {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.price {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.summary-totals {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.summary-totals div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.summary-totals .total {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  color: #1f80be;
+}
+
+.savings {
+  font-size: 0.85rem;
+  color: #16a34a;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 992px) {
+  .checkout-container {
+    flex-direction: column;
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .checkout-form,
+  .order-summary {
+    width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1rem;
+  }
+
+  .pay-button {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+
+
+/* Delivery Section Styling */
+.section.delivery {
+  background-color: var(--bg-color);
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.section.delivery:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+
+/* تحسين مظهر select */
+.section.delivery select {
+  appearance: none; /* إزالة الشكل الافتراضي */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--bg-color);
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #333;
+  width: 100%;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%231f80be' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
+}
+
+/* عند المرور أو التركيز */
+.section.delivery select:hover {
+  border-color: #1f80be;
+  background-color: var(--bg-color);
+}
+
+.section.delivery select:focus {
+  outline: none;
+  border-color: #1f80be;
+  box-shadow: 0 0 0 2px rgba(31, 128, 190, 0.15);
+  background-color: var(--bg-color);
+}
+
+/* لما المستخدم يفتح القائمة */
+.section.delivery select option {
+  background-color: var(--bg-color);
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* لو عايز تعمل شكل خاص للقائمة المنسدلة نفسها (اختياري) */
+select::-ms-expand {
+  display: none; /* إخفاء السهم الافتراضي في إنترنت إكسبلورر */
+}
+
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.select-address-btn {
+  background-color: var(--bg-color);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.select-address-btn:hover {
+  background-color: var(--bg-color);
+}
+
+/* Dialog styles */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.dialog {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 380px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dialog h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.address-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.address-list li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.address-list li:hover {
+  background-color: var(--bg-color);
+  border-color: #1f80be;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-buttons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dialog-buttons .cancel-btn {
+  background: #ccc;
+}
+
+.dialog-buttons button:first-child {
+  background: #1f80be;
+  color: white;
+}
+
+
+/* ====== Payment Section ====== */
+.section.payment {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.section.payment:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+.section.payment h2 {
+  color: #1f80be;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.section.payment .info-text {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ====== Payment Options Cards ====== */
+.payment-option {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.payment-option:hover {
+  border-color: #1f80be;
+  background-color: var(--bg-color);
+  transform: translateY(-1px);
+}
+
+.payment-option.active {
+  border-color: #1f80be;
+  background-color: var(--bg-color);
+  box-shadow: 0 3px 10px rgba(31, 128, 190, 0.15);
+}
+
+/* ====== Header inside Payment Option ====== */
+.option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.option-header div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-header input[type="radio"] {
+  accent-color: #1f80be;
+}
+
+.option-header span {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.card-icons {
+  display: flex;
+  gap: 8px;
+  color: #1f80be;
+}
+
+/* ====== Card Details Fields ====== */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.card-details input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-details input:focus {
+  border-color: #1f80be;
+  box-shadow: 0 0 0 2px rgba(31, 128, 190, 0.1);
+  outline: none;
+}
+
+/* ترتيب الحقول داخل الكارت */
+.card-details > div {
+  display: flex;
+  gap: 10px;
+}
