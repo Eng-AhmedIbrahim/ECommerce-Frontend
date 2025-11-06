@@ -1,7 +1,7 @@
 .product-category-page {
   background-color: var(--bg-color);
-  /* min-height: 100vh; */
   transition: all 0.3s ease;
+  margin-bottom: 55px;
 }
 
 .fade-in {

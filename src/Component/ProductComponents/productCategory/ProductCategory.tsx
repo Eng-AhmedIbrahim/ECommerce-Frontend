@@ -73,28 +73,6 @@ const ProductCategory = (): JSX.Element => {
 
   const products = useAppSelector((state) => state.productData.value);
 
-  // هنا بنخلي كل الكاتيجوريات تظهر حتى لو فاضية
-  // const categorizedProducts = useMemo(() => {
-  //   if (!categories || !products) return [];
-  //   return [...categories]
-  //     ?.sort((a, b) => {
-  //       const aIndex = a?.index ?? Infinity;
-  //       const bIndex = b?.index ?? Infinity;
-  //       return aIndex - bIndex;
-  //     })
-  //     .map((cat) => {
-  //       const catProducts = products.filter(
-  //         (p) => p?.Product?.categoryId === cat.id
-  //       );
-
-  //       return {
-  //         id: cat.id,
-  //         title: lang === "ar" ? cat.arabicName : cat.englishName,
-  //         items: catProducts,
-  //       };
-  //     });
-  // }, [categories, products, lang]);
-
   const categorizedProducts = useMemo(() => {
   if (!categories || !products) return [];
 

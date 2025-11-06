@@ -22,8 +22,8 @@
 
 .carousel-image {
   width: 100%;
-  height: calc(100vh - var(--carousel-offset, 100px)); /* نفس ارتفاع الكود */
-  object-fit: cover; /* يحافظ على الجودة والنسبة */
+  height: calc(100vh - var(--carousel-offset, 100px));
+  object-fit: cover;
   object-position: center center;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: high-quality;
@@ -33,19 +33,15 @@
   filter: brightness(1.03) contrast(1.05) saturate(1.03);
 }
 
-/* Hover تأثير أنعم */
 .carousel-image:hover {
   transform: scale(1.03);
   filter: brightness(1.08) contrast(1.1) saturate(1.08);
 }
 
-/* ثبات الطول */
 .carousel-item {
-  height: calc(100vh - var(--carousel-offset, 100px));
   overflow: hidden;
 }
 
-/* تحسين للأجهزة الصغيرة */
 @media (max-width: 768px) {
   .carousel-image {
     height: calc(100vh - var(--carousel-offset, 80px));
@@ -53,7 +49,6 @@
   }
 }
 
-/* للشاشات الكبيرة */
 @media (min-width: 1600px) {
   .carousel-image {
     image-rendering: crisp-edges;
@@ -61,8 +56,6 @@
   }
 }
 
-
-/* حركة ناعمة للكابتشن */
 @keyframes fadeInUp {
   from {
     opacity: 0;

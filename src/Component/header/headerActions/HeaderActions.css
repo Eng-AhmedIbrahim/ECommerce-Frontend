@@ -108,7 +108,6 @@ body.dark .dropdown-menu-custom .dropdown-divider {
   width: 100%;
 }
 
-
 .dropdown-toggle::after {
   display: none !important;
   content: none !important;
