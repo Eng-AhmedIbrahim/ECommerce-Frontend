@@ -8,7 +8,7 @@ const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
   // baseUrl: "https://localhost:7019/api",
-  baseUrl:"https://menemwebsite.runasp.net/api",
+  baseUrl:"https://menemsite.runasp.net/api",
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("accessToken");

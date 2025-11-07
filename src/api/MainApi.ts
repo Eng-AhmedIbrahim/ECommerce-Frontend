@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance } from "axios";
 
 // const mainApiUrl = `https://localhost:7019`;
-const mainApiUrl = `https://menemwebsite.runasp.net`;
+const mainApiUrl = `https://menemsite.runasp.net`;
 
 
 
