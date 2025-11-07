@@ -608,16 +608,13 @@
     display: none !important;
   }
   .premium-card .col-md-7 {
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    justify-content: center;
   }
   .premium-card {
     border-radius: 20px !important;
     height: auto !important;
     max-height: none !important;
-    height: 95vh !important;
+    /* height: 95vh !important; */
   }
   .signin-page-container {
     padding: 1rem 0;
@@ -716,7 +713,7 @@
   width: 100%;
   height: 100%;
   /* background: linear-gradient(135deg, #f0f4ff, #dbe7ff); */
-  background-color: #f03a36;
+  background-color: #F03A36;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1095,6 +1092,7 @@
   justify-content: center;
   transition: all 0.3s ease;
 }
+
 
 .forgot-password {
   color: var(--link-color) !important;
