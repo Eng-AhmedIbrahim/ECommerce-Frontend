@@ -22,9 +22,8 @@ const Loading: React.FC<SpinnerBarsProps> = ({
 
   const [theme] = context;
 
-  const color = theme === "dark" ? "url(#gradient)" : "#3b82f6";
+  const color = theme === "dark" ? "url(#gradient)" : "url(#light-gradient)";
 
-  // array لتحديد delays لكل بار
   const delays = [0, 0.2, 0.4];
 
   return (
@@ -38,14 +37,17 @@ const Loading: React.FC<SpinnerBarsProps> = ({
     >
       <title>Loading...</title>
 
-      {theme === "dark" && (
-        <defs>
-          <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3b3b3b" />
-            <stop offset="100%" stopColor="#5c55e9" />
-          </linearGradient>
-        </defs>
-      )}
+      <defs>
+        <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#3b3b3b" />
+          <stop offset="100%" stopColor="var(--loading-color)" />
+        </linearGradient>
+
+        <linearGradient id="light-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#f06b6bff" />
+          <stop offset="100%" stopColor="var(--loading-color)" />
+        </linearGradient>
+      </defs>
 
       <style>{`
         @keyframes bounce {
@@ -57,7 +59,7 @@ const Loading: React.FC<SpinnerBarsProps> = ({
       {delays.map((delay, i) => (
         <rect
           key={i}
-          x={5 + i * 20} // البعد بين البارات
+          x={5 + i * 20}
           y={15}
           width={10}
           height={30}

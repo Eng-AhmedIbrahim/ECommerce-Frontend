@@ -3,12 +3,10 @@
     content: none !important;
 }
 
-
 .carousel-item img
 {
     border-radius:0 !important;
 }
-
 
 .carousel-control-next-icon::after,
 .carousel-control-prev-icon::after {
@@ -18,7 +16,6 @@
 .carousel-item img {
   border-radius: 0 !important;
 }
-
 
 .carousel-image {
   width: 100%;
