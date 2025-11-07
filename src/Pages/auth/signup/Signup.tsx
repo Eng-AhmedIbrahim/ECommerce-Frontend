@@ -560,6 +560,7 @@ const SignUp = () => {
                       <span className="text-muted">Or Continue With:</span>
                     </div>
 
+
                     <div className="d-flex justify-content-center gap-4 social-login-buttons">
                       <Button
                         variant="outline-light"
