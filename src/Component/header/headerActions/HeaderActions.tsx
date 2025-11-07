@@ -60,7 +60,7 @@ export default function HeaderActions({
     <div className={`icons-container ${isMobile ? "mobile-icons" : ""}`}>
       {isMobile ? (
         <>
-          <Button className="icon-btn" aria-label="Home">
+          <Button className="icon-btn" aria-label="Home" onClick={() => navigate("/")}>
             <FaHome />
           </Button>
           {CartButton}
