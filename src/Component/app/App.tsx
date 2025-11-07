@@ -39,7 +39,7 @@ function App() {
   // 🌐 Language State
   const [lang, setLang] = useState<string>(() => {
     const savedLanguage = localStorage.getItem("lang");
-    return savedLanguage || "en";
+    return savedLanguage || "ar";
   });
 
   // ⚙️ React Query

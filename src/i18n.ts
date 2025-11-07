@@ -36,7 +36,7 @@ const resources = {
   },
   ar: {
     translation: {
-      MyWebsite: "منعم",
+      MyWebsite: "منعم ستور",
       Home: "الرئيسية",
       Shop: "المتجر",
       Wishlist: "المفضلة",
