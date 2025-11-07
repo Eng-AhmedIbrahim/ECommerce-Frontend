@@ -31,7 +31,7 @@ function App() {
   const [theme, setTheme] = useState<string>(() => {
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
+      "(prefers-color-scheme: light)"
     ).matches;
     return savedTheme || (prefersDark ? "dark" : "light");
   });
