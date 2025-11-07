@@ -52,13 +52,22 @@
   --black-box-shadow:rgba(0, 0, 0, 0.08);
   --review-comment-color:#333;
   --review-date:#666;
-  --signIn-first-bg-color:#667eea;
+  /* --signIn-first-bg-color:#667eea;
   --signIn-second-bg-color:#56119f;
   --signIn-third-bg-color:#4c2799;
   --signin-page-container-first-grade: rgba(120, 119, 198, 0.3);
   --signin-page-container-second-grade: rgba(255, 119, 198, 0.3);
   --signin-page-container-third-grade: rgba(120, 219, 255, 0.2);
   --premium-card-second-color:#764ba2;
+  --premium-card-third-color:#f093fb; */
+  
+  --signIn-first-bg-color:#F03A37;
+  --signIn-second-bg-color:#641716;
+  --signIn-third-bg-color:#8d4b4a;
+  --signin-page-container-first-grade: rgba(120, 119, 198, 0.3);
+  --signin-page-container-second-grade: rgba(255, 119, 198, 0.3);
+  --signin-page-container-third-grade: rgba(120, 219, 255, 0.2);
+  --premium-card-second-color:#F03A37;
   --premium-card-third-color:#f093fb;
   --primary-bg-panel-before-color-first: rgba(255, 255, 255, 0.1);
   --primary-bg-panel-before-color-second: rgba(255, 255, 255, 0.08);
@@ -67,20 +76,20 @@
   --premium-card-box-shadow-second-color:rgba(0, 0, 0, 0.08);
   --premium-card-box-shadow-third-color:rgba(0, 0, 0, 0.04);
   --premium-card-box-shadow-forth-color:rgba(255, 255, 255, 0.9);
-  --signin-border-permium-card:rgba(255, 255, 255, 0.3);
+  --signin-border-permium-card:#F03A37;
   --logo-placeholder-color:rgba(255, 255, 255, 0.15);
   --logo-placeholder-box-shadow:rgba(255, 255, 255, 0.4);
   --custom-signin-button-first-box-shadow:rgba(102, 126, 234, 0.4);
   --custom-signin-button-second-box-shadow:rgba(102, 126, 234, 0.2);
   --custom-signin-button-after:rgba(255, 255, 255, 0.2);
-  --custom-signin-button-hover-first:#5a67d8;
-  --custom-signin-button-hover-second:#6b46c1;
+  --custom-signin-button-hover-first:#F03A37;
+  --custom-signin-button-hover-second:#c0423f;
   --custom-signin-button-hover-box-shadow:rgba(102, 126, 234, 0.6);
   --social-icon-button-google-hover-1 :rgba(66, 133, 244, 0.25);
   --social-icon-button-google-hover-2 :rgba(66, 133, 244, 0.15);
   --social-icon-button-google-hover-3 :rgba(255, 255, 255, 1);
-  --profile-picture-uploader-second-color:#06b6d4;
-  --profile-picture-uploader-third-color:#1e40af;
+  --profile-picture-uploader-second-color:#c0423f;
+  --profile-picture-uploader-third-color:#dc4d4b;
   --profile-picture-uploader-third-color-box-shadow-1:rgba(59, 130, 246, 0.3) ;
   --profile-picture-uploader-third-color-box-shadow-2: rgba(255, 255, 255, 0.2);
 

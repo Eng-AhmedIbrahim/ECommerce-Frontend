@@ -22,7 +22,7 @@ import {
 } from "react-bootstrap-icons";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/minLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterApiMutation } from "../../../Services/AuthApi";
 import "../login/Login.css";
@@ -305,7 +305,7 @@ const SignUp = () => {
                 <Col md={7} className="p-3 p-md-4">
                   <h3
                     className="fw-bolder mb-3 text-center"
-                    style={{ color: "#1595ebff" }}
+                    style={{ color: "#F03A37" }}
                   >
                     Create Your Account
                   </h3>
@@ -534,7 +534,7 @@ const SignUp = () => {
                             style={{ fontSize: "0.9rem" }}
                           >
                             I agree to the{" "}
-                            <a href="#" className="fw-bold">
+                            <a href="#" className="fw-bold forgot-password">
                               Terms & Conditions
                             </a>
                           </span>
@@ -548,7 +548,7 @@ const SignUp = () => {
                     {/* Submit Button */}
                     <Button
                       type="submit"
-                      className="w-100 fw-bold custom-signup-button mb-4"
+                      className="w-100 fw-bold custom-signin-button mb-4"
                       disabled={Object.values(formErrors).some((e) => e !== "")}
                     >
                       Create Account
@@ -576,13 +576,13 @@ const SignUp = () => {
                         onClick={() => console.log("Facebook Login")}
                         title="Sign up with Facebook"
                       >
-                        <FaFacebookF size={20} color="#3b5998" />
+                        <FaFacebookF size={20} color="#b92121ff" />
                       </Button>
                     </div>
 
                     <p className="text-center mt-4 text-muted fs-7">
                       Already have an account?{" "}
-                      <Link to="/login" className="fw-bold">
+                      <Link to="/login" className="fw-bold forgot-password">
                         Login
                       </Link>
                     </p>

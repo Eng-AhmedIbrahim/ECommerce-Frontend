@@ -11,7 +11,7 @@ import {
 import { Envelope, Lock, ArrowRightShort } from "react-bootstrap-icons";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/minLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginApiMutation } from "../../../Services/AuthApi";
 import "./Login.css";
@@ -120,7 +120,7 @@ const SignIn = () => {
                 <Col md={7} className="p-3 p-md-4">
                   <h3
                     className="fw-bolder mb-3 text-center"
-                    style={{ color: "#1595ebff" }}
+                    style={{ color: "#F03A37" }}
                   >
                     Welcome Back!
                   </h3>
@@ -191,7 +191,7 @@ const SignIn = () => {
                       <Col md={6} className="text-end">
                         <Link
                           to="/forgot-password"
-                          className="fw-bold"
+                          className="fw-bold forgot-password"
                           style={{ fontSize: "0.9rem" }}
                         >
                           Forgot Password?
@@ -234,7 +234,7 @@ const SignIn = () => {
                         onClick={() => console.log("Facebook Login")}
                         title="Sign in with Facebook"
                       >
-                        <FaFacebookF size={26} style={{ color: "#1877f2" }} />
+                        <FaFacebookF size={26} style={{ color: "#b92121ff" }} />
                       </Button>
                     </div>
                   </Form>
@@ -244,7 +244,7 @@ const SignIn = () => {
                     style={{ fontSize: "0.95rem" }}
                   >
                     Don't have an account?{" "}
-                    <Link to="/signup" className="fw-bold text-decoration-none">
+                    <Link to="/signup" className="fw-bold text-decoration-none forgot-password">
                       Sign up here
                     </Link>
                   </p>
