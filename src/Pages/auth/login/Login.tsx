@@ -43,13 +43,9 @@ const SignIn = () => {
     switch (name) {
       case "email":
         if (!value) return "Email is required";
-        if (typeof value === "string" && !/^\S+@\S+\.\S+$/.test(value))
-          return "Invalid email format";
         return "";
       case "password":
         if (!value) return "Password is required";
-        if (typeof value === "string" && value.length < 6)
-          return "Password must be at least 6 characters";
         return "";
       default:
         return "";
@@ -244,7 +240,10 @@ const SignIn = () => {
                     style={{ fontSize: "0.95rem" }}
                   >
                     Don't have an account?{" "}
-                    <Link to="/signup" className="fw-bold text-decoration-none forgot-password">
+                    <Link
+                      to="/signup"
+                      className="fw-bold text-decoration-none forgot-password"
+                    >
                       Sign up here
                     </Link>
                   </p>

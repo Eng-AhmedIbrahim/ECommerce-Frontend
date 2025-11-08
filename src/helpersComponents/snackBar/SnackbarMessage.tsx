@@ -30,7 +30,7 @@ const SnackbarMessage: React.FC<SnackbarMessageProps> = ({
 
     const colors = {
       success: {
-        backgroundColor: isDark ? "#1A448F" : "#1f80be",
+        backgroundColor: isDark ? "#d32f2f" : "#d32f2f",
         color: "#fff",
       },
       error: {
@@ -38,11 +38,11 @@ const SnackbarMessage: React.FC<SnackbarMessageProps> = ({
         color: "#fff",
       },
       warning: {
-        backgroundColor: isDark ? "#ffb300" : "#fbc02d",
+        backgroundColor: isDark ? "#d32f2f" : "#d32f2f",
         color: isDark ? "#1a1a1a" : "#000",
       },
       info: {
-        backgroundColor: isDark ? "#1976d2" : "#2196f3",
+        backgroundColor: isDark ? "#d32f2f" : "#d32f2f",
         color: "#fff",
       },
     };
