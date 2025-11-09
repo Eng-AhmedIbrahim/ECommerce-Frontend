@@ -10,6 +10,7 @@ import "./App.css";
 import WishlistPage from "../../Pages/wishlist/Wishlist";
 import Loading from "../../helpersComponents/loading/Loading";
 import ErrorBoundry from "../../error/ErrorBoundry";
+import CheckOutWrapper from "../../helpersComponents/CheckOutWrapper";
 
 // ✅ Lazy Imports
 const Home = lazy(() => import("../../Pages/home/Home"));
@@ -17,7 +18,7 @@ const Layout = lazy(() => import("../../helpersComponents/layout/Layout"));
 const SignUp = lazy(() => import("../../Pages/auth/signup/Signup"));
 const SignIn = lazy(() => import("../../Pages/auth/login/Login"));
 const Product = lazy(() => import("../../Pages/product/Product"));
-const CheckOutPage = lazy(()=> import("../../Pages/checkOut/CheckOutPage"));
+const CheckOutPage = lazy(() => import("../../Pages/checkOut/CheckOutPage"));
 const FullScreenWrapper = lazy(
   () => import("../../helpersComponents/FullScreenWrapper")
 );
@@ -27,7 +28,6 @@ const ProductDetails = lazy(
 const ScrollToTop = lazy(() => import("../../helpers/ScrollToTop"));
 
 function App() {
-  // 🎨 Theme State
   const [theme, setTheme] = useState<string>(() => {
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
@@ -36,13 +36,11 @@ function App() {
     return savedTheme || (prefersDark ? "dark" : "light");
   });
 
-  // 🌐 Language State
   const [lang, setLang] = useState<string>(() => {
     const savedLanguage = localStorage.getItem("lang");
     return savedLanguage || "ar";
   });
 
-  // ⚙️ React Query
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -59,14 +57,12 @@ function App() {
     });
   }, []);
 
-  // 🌓 Apply Theme on Load
   useEffect(() => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // 🌍 Apply Language Direction
   useEffect(() => {
     document.body.dir = lang === "ar" ? "rtl" : "ltr";
     localStorage.setItem("lang", lang);
@@ -74,109 +70,111 @@ function App() {
 
   return (
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ThemeContext.Provider value={[theme, setTheme]}>
-            <LocalizationContext.Provider value={[lang, setLang]}>
-              <QueryClientProvider client={queryClient}>
-                <Router>
-                  {showRoutes ? (
-                    <>
-                      <ScrollToTop />
-                      <Suspense
-                        fallback={
-                          <div className="loading-style">
-                            <Loading size={300} className="text-blue-500" />
-                          </div>
-                        }
-                      >
-                        <Routes>
-                          {/* Protected routes */}
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeContext.Provider value={[theme, setTheme]}>
+          <LocalizationContext.Provider value={[lang, setLang]}>
+            <QueryClientProvider client={queryClient}>
+              <Router>
+                {showRoutes ? (
+                  <>
+                    <ScrollToTop />
+                    <Suspense
+                      fallback={
+                        <div className="loading-style">
+                          <Loading size={300} className="text-blue-500" />
+                        </div>
+                      }
+                    >
+                      <Routes>
+                        {/* Protected routes */}
+                        <Route
+                          element={
+                            <ErrorBoundry>
+                              <Layout />
+                            </ErrorBoundry>
+                          }
+                        >
                           <Route
+                            path="/"
                             element={
                               <ErrorBoundry>
-                                <Layout />
+                                <Home />
                               </ErrorBoundry>
                             }
-                          >
-                            <Route
-                              path="/"
-                              element={
-                                <ErrorBoundry>
-                                  <Home />
-                                </ErrorBoundry>
-                              }
-                            />
-                            <Route
-                              path="/shop"
-                              element={
-                                <ErrorBoundry>
-                                  <Product />
-                                </ErrorBoundry>
-                              }
-                            />
-                            <Route
-                              path="/productDetails/:id"
-                              element={
-                                <ErrorBoundry>
-                                  <ProductDetails />
-                                </ErrorBoundry>
-                              }
-                            />
-                            <Route
-                              path="/wishlist"
-                              element={
-                                <ErrorBoundry>
-                                  <WishlistPage />
-                                </ErrorBoundry>
-                              }
-                            />
-                            <Route 
-                            path="/checkout"
+                          />
+                          <Route
+                            path="/shop"
                             element={
                               <ErrorBoundry>
-                                <CheckOutPage />
+                                <Product />
                               </ErrorBoundry>
                             }
+                          />
+                          <Route
+                            path="/productDetails/:id"
+                            element={
+                              <ErrorBoundry>
+                                <ProductDetails />
+                              </ErrorBoundry>
+                            }
+                          />
+                          <Route
+                            path="/wishlist"
+                            element={
+                              <ErrorBoundry>
+                                <WishlistPage />
+                              </ErrorBoundry>
+                            }
+                          />
+                          <Route element={<CheckOutWrapper />}>
+                            <Route
+                              path="/checkout"
+                              element={
+                                <ErrorBoundry>
+                                  <CheckOutPage />
+                                </ErrorBoundry>
+                              }
                             />
                           </Route>
+                        </Route>
 
+                        <Route
+                          element={
+                            <ErrorBoundry>
+                              <FullScreenWrapper />
+                            </ErrorBoundry>
+                          }
+                        >
                           <Route
+                            path="/signup"
                             element={
                               <ErrorBoundry>
-                                <FullScreenWrapper />
+                                <SignUp />
                               </ErrorBoundry>
                             }
-                          >
-                            <Route
-                              path="/signup"
-                              element={
-                                <ErrorBoundry>
-                                  <SignUp />
-                                </ErrorBoundry>
-                              }
-                            />
-                            <Route
-                              path="/login"
-                              element={
-                                <ErrorBoundry>
-                                  <SignIn />
-                                </ErrorBoundry>
-                              }
-                            />
-                          </Route>
-                        </Routes>
-                      </Suspense>
-                    </>
-                  ) : (
-                    <div className="loading-style">
-                      <Loading size={300} className="text-blue-500" />
-                    </div>
-                  )}
-                </Router>
-              </QueryClientProvider>
-            </LocalizationContext.Provider>
-          </ThemeContext.Provider>
-        </PersistGate>
+                          />
+                          <Route
+                            path="/login"
+                            element={
+                              <ErrorBoundry>
+                                <SignIn />
+                              </ErrorBoundry>
+                            }
+                          />
+                        </Route>
+                      </Routes>
+                    </Suspense>
+                  </>
+                ) : (
+                  <div className="loading-style">
+                    <Loading size={300} className="text-blue-500" />
+                  </div>
+                )}
+              </Router>
+            </QueryClientProvider>
+          </LocalizationContext.Provider>
+        </ThemeContext.Provider>
+      </PersistGate>
     </Provider>
   );
 }

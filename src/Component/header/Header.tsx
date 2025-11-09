@@ -30,20 +30,14 @@ export default function Header() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || "en";
 
-  const getCartItemsCount = (): number => {
-    const user = useAppSelector((select) => select.authSlice.user);
-    let cartItemCount = 0;
-    if (!user) {
-      cartItemCount = useAppSelector((select) => select.cartSlice.items.length);
-    } else {
-      const { data: userCart } = useGetCartQuery(user.userId, {
-        skip: !user.userId,
-      });
-
-      if (userCart) cartItemCount = userCart.totalItems;
-    }
-    return cartItemCount;
-  };
+  const user = useAppSelector((state) => state.authSlice.user);
+  const cartItems = useAppSelector((state) => state.cartSlice.items);
+  const { data: userCart } = useGetCartQuery(user?.userId!, {
+    skip: !user?.userId,
+  });
+  const cartItemCount = user
+    ? userCart?.totalItems || 0
+    : cartItems?.length || 0;
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
   const toggleLanguage = () => {
@@ -76,7 +70,7 @@ export default function Header() {
           <Navbar.Brand
             as={Link}
             to="/"
-            className="me-3 mx-3 navbar-brand-custom" 
+            className="me-3 mx-3 navbar-brand-custom"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             {t("MyWebsite")}
@@ -128,7 +122,7 @@ export default function Header() {
 
             <div className="d-none d-lg-flex header-actions-container">
               <HeaderActions
-                CartItemCount={getCartItemsCount()}
+                CartItemCount={cartItemCount}
                 onCartClick={handleCartToggle}
               />
             </div>
@@ -166,7 +160,7 @@ export default function Header() {
       <div className="mobile-bottom-nav d-flex d-lg-none">
         <HeaderActions
           isMobile={true}
-          CartItemCount={getCartItemsCount()}
+          CartItemCount={cartItemCount}
           onCartClick={handleCartToggle}
         />
       </div>

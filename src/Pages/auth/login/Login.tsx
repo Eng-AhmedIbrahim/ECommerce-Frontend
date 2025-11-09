@@ -12,7 +12,7 @@ import { Envelope, Lock, ArrowRightShort } from "react-bootstrap-icons";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import logo from "../../../assets/minLogo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginApiMutation } from "../../../Services/AuthApi";
 import "./Login.css";
 
@@ -28,6 +28,11 @@ const IllustrationPlaceholder = () => (
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get("redirect") || "/";
+
   const [loginApi, { isLoading }] = useLoginApiMutation();
 
   const [formData, setFormData] = useState({
@@ -94,11 +99,15 @@ const SignIn = () => {
       successPopup.textContent = "Login successful 🎉";
       successPopup.className = "popup-message success";
       document.body.appendChild(successPopup);
-      setTimeout(() => successPopup.remove(), 2500);
+      setTimeout(() => successPopup.remove(), 1000);
 
-      navigate("/");
+      navigate(redirect);
     } catch (err: any) {
-      console.error("Login failed:", err);
+      const failedPopup = document.createElement("div");
+      failedPopup.textContent = "Login Failed Incorrect Username or Password ❌";
+      failedPopup.className = "popup-message error";
+      document.body.appendChild(failedPopup);
+      setTimeout(() => failedPopup.remove(), 1000);
       setLoginError(err?.data?.message || "Invalid email or password");
     }
   };
@@ -139,7 +148,7 @@ const SignIn = () => {
                       <InputGroup className="custom-input-group">
                         <Envelope className="custom-input-icon" />
                         <Form.Control
-                          type="email"
+                          type="text"
                           name="email"
                           placeholder="Email Address"
                           value={formData.email}
