@@ -43,13 +43,21 @@
   margin-bottom: 16px;
 }
 
+.variant-group h4 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: var(--accent-color);
+}
+
+body.dark .variant-group h4 {
+  color: var(--white-text-color);
+}
 .variant-options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
 }
-
 .variant-btn {
   border: 1px solid var(--starts-color);
   background: var(--btn-bg);
@@ -61,7 +69,8 @@
 }
 
 .variant-btn:hover {
-  background: var(--btn-hover);
+  background: var(--accent-color);
+  color: var(--white-text-color);
 }
 
 .variant-btn.selected {
