@@ -7,7 +7,10 @@ export const AuthApi = createApi({
   reducerPath: "authApi",
   baseQuery: BaseApi,
   endpoints: (builder) => ({
-    loginApi: builder.mutation<LoginResponseDto,{ credentials: { email: string; password: string }; rememberMe: boolean }>({
+    loginApi: builder.mutation<
+      LoginResponseDto,
+      { credentials: { email: string; password: string }; rememberMe: boolean }
+    >({
       query: ({ credentials }) => ({
         url: "/Account/login",
         method: "POST",
@@ -32,6 +35,7 @@ export const AuthApi = createApi({
               accessToken: data.token,
             })
           );
+
         } catch (error) {
           console.error("Login failed:", error);
         }

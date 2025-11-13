@@ -85,7 +85,12 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
                         className={`variant-btn ${
                           isSelected ? "selected" : ""
                         }`}
-                        onClick={() => handleSelectVariant(attr, v)}
+                        onClick={() =>
+                          handleSelectVariant(
+                            `${v.attributeArabicName},${v.attributeEnglishName}`,
+                            v
+                          )
+                        }
                       >
                         {lang.language === "en"
                           ? v.englishValue

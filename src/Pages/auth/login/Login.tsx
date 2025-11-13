@@ -15,6 +15,13 @@ import logo from "../../../assets/minLogo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginApiMutation } from "../../../Services/AuthApi";
 import "./Login.css";
+import type { CartItem } from "../../../common/CartTypes";
+import {
+  useAddToCartMutation,
+  useGetCartQuery,
+} from "../../../Services/CartService";
+import { useAppDispatch, useAppSelector } from "../../../app/Hooks";
+import { clearCart, setCart } from "../../../features/cart/CartSlice";
 
 const IllustrationPlaceholder = () => (
   <div className="illustration-wrapper">
@@ -29,11 +36,18 @@ const IllustrationPlaceholder = () => (
 const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const cartSlice = useAppSelector((state) => state.cartSlice);
 
   const params = new URLSearchParams(location.search);
   const redirect = params.get("redirect") || "/";
+  const [userId, setUserId] = useState<string>("");
 
   const [loginApi, { isLoading }] = useLoginApiMutation();
+  const [addToCart] = useAddToCartMutation();
+  const { data: cartDataFromServer, refetch } = useGetCartQuery(userId, {
+    skip: !userId,
+  });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -59,26 +73,21 @@ const SignIn = () => {
 
   const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, type, value, checked } = e.target;
-
-    if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
-    } else {
-      setFormData({ ...formData, [name]: value });
-
-      const errorMsg = validateField(name, value);
-      setFormErrors({ ...formErrors, [name]: errorMsg });
-    }
+    const updatedValue = type === "checkbox" ? checked : value;
+    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+    const errorMsg = validateField(name, updatedValue);
+    setFormErrors((prev) => ({ ...prev, [name]: errorMsg }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // التحقق من الفورم
     const newErrors: Record<string, string> = {};
     Object.entries(formData).forEach(([key, value]) => {
       const err = validateField(key, value);
       if (err) newErrors[key] = err;
     });
-
     if (Object.keys(newErrors).length > 0) {
       setFormErrors(newErrors);
       return;
@@ -87,13 +96,58 @@ const SignIn = () => {
     try {
       setLoginError("");
 
-      await loginApi({
+      const result = await loginApi({
         credentials: {
           email: formData.email,
           password: formData.password,
         },
         rememberMe: formData.rememberMe,
       }).unwrap();
+
+      if (cartSlice?.items?.length > 0) {
+        try {
+          await Promise.all(
+            cartSlice.items.map(async (item: CartItem) => {
+              const payload: CartItem = {
+                productId: item.productId,
+                productName: item.productName,
+                productNameAr: item.productNameAr,
+                imageUrl: item.imageUrl,
+                price: item.price,
+                quantity: item.quantity,
+                selectedVariants: item.selectedVariants,
+                originalPrice: item.originalPrice,
+                discountPercentage: item.discountPercentage,
+              };
+
+              try {
+                await addToCart({
+                  userId: result.userId,
+                  item: payload,
+                }).unwrap();
+              } catch (error) {
+                console.error("Failed to sync cart item:", error);
+              }
+            })
+          );
+
+          console.log("✅ Cart synced successfully");
+        } catch (err) {
+          console.error("❌ Error syncing cart:", err);
+        }
+      }
+
+      console.log("Login successful:", cartSlice);
+
+      setUserId(result.userId);
+      const response = await refetch();
+      const serverCart = response?.data;
+
+      dispatch(clearCart());
+      if (serverCart) {
+        localStorage.setItem("cart", JSON.stringify(serverCart));
+        dispatch(setCart(serverCart));
+      }
 
       const successPopup = document.createElement("div");
       successPopup.textContent = "Login successful 🎉";
@@ -104,7 +158,8 @@ const SignIn = () => {
       navigate(redirect);
     } catch (err: any) {
       const failedPopup = document.createElement("div");
-      failedPopup.textContent = "Login Failed Incorrect Username or Password ❌";
+      failedPopup.textContent =
+        "Login Failed ❌ Incorrect Username or Password";
       failedPopup.className = "popup-message error";
       document.body.appendChild(failedPopup);
       setTimeout(() => failedPopup.remove(), 1000);
@@ -232,7 +287,6 @@ const SignIn = () => {
                       >
                         <FcGoogle size={26} />
                       </Button>
-
                       <Button
                         variant="outline-light"
                         className="social-icon-button facebook"

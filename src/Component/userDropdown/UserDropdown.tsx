@@ -10,8 +10,10 @@ import { useAppSelector } from "../../app/Hooks";
 import { useLogoutApiMutation } from "../../Services/AuthApi";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "../../app/Hooks";
 
 import "./UserDropdown.css";
+import { clearCart } from "../../features/cart/CartSlice";
 
 export default function UserDropdown({ theme }: any) {
   const { isAuthenticated, user } = useAppSelector((state) => state.authSlice);
@@ -19,13 +21,26 @@ export default function UserDropdown({ theme }: any) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
+  const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
     try {
       await logoutApi().unwrap();
-      navigate("/login");
+      dispatch(clearCart());
+      localStorage.removeItem("cart");
+      navigate("/");
+      const successPopup = document.createElement("div");
+      successPopup.textContent = "Logout successful 🎉";
+      successPopup.className = "popup-message success";
+      document.body.appendChild(successPopup);
+      setTimeout(() => successPopup.remove(), 1000);
     } catch (error) {
       console.error("Logout failed:", error);
+      const failedPopup = document.createElement("div");
+      failedPopup.textContent = "Logout Failed ❌ Please try again";
+      failedPopup.className = "popup-message error";
+      document.body.appendChild(failedPopup);
+      setTimeout(() => failedPopup.remove(), 1000);
     }
   };
 

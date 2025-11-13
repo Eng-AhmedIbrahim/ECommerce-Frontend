@@ -16,6 +16,7 @@ import {
 import { FaTrashAlt, FaShoppingCart, FaTimes } from "react-icons/fa";
 import "./CartSidebar.css";
 import type { CartItem } from "../../common/CartTypes";
+import { useNavigate } from "react-router-dom";
 
 const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
@@ -27,6 +28,7 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const { i18n } = useTranslation();
   const lang = i18n.language || "en";
   const [closing, setClosing] = useState(false);
+  const navigate = useNavigate();
 
   const { data: cartFromApi, refetch: refetchCart } = useGetCartQuery(
     user?.userId!,
@@ -257,6 +259,26 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                       </button>
                     </div>
                   </div>
+                  {item.selectedVariants &&
+                    Object.keys(item.selectedVariants).length > 0 && (
+                      <div className="cart-item-variants">
+                        {Object.entries(item.selectedVariants).map(
+                          ([variantName, options], index) => (
+                            <div key={index} className="variant-line">
+                              <strong>
+                                {lang === "ar"
+                                  ? variantName.split(",")[0]
+                                  : variantName.split(",")[1]}
+                                :
+                              </strong>{" "}
+                              <span>
+                                {lang === "ar" ? options[0] : options[1]}{" "}
+                              </span>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
@@ -277,7 +299,10 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
               <hr />
 
-              <button className="cart-create-btn">
+              <button
+                className="cart-create-btn"
+                onClick={() => navigate("/checkout")}
+              >
                 {lang === "ar" ? "إنشاء الطلب" : "Check Out"}
               </button>
               <button className="cart-clear-btn" onClick={handleClearCart}>
