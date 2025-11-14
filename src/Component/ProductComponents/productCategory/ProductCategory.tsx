@@ -61,6 +61,11 @@ const ProductCategory = (): JSX.Element => {
     }
 
     const areEqual =
+      productsInStore.every(
+        (p, i) =>
+          p.Product.productReviews.length !==
+          productsWithLove[i].Product.productReviews.length
+      ) &&
       productsInStore.length === productsWithLove.length &&
       productsInStore.every(
         (p, i) =>
@@ -74,28 +79,27 @@ const ProductCategory = (): JSX.Element => {
   const products = useAppSelector((state) => state.productData.value);
 
   const categorizedProducts = useMemo(() => {
-  if (!categories || !products) return [];
+    if (!categories || !products) return [];
 
-  return [...categories]
-    .sort((a, b) => {
-      const aIndex = a?.index ?? Infinity;
-      const bIndex = b?.index ?? Infinity;
-      return aIndex - bIndex;
-    })
-    .map((cat) => {
-      const catProducts = products.filter(
-        (p) => p?.Product?.categoryId === cat.id
-      );
+    return [...categories]
+      .sort((a, b) => {
+        const aIndex = a?.index ?? Infinity;
+        const bIndex = b?.index ?? Infinity;
+        return aIndex - bIndex;
+      })
+      .map((cat) => {
+        const catProducts = products.filter(
+          (p) => p?.Product?.categoryId === cat.id
+        );
 
-      return {
-        id: cat.id,
-        title: lang === "ar" ? cat.arabicName : cat.englishName,
-        items: catProducts,
-      };
-    })
-    .filter((cat) => cat.items.length > 0);
-}, [categories, products, lang]);
-
+        return {
+          id: cat.id,
+          title: lang === "ar" ? cat.arabicName : cat.englishName,
+          items: catProducts,
+        };
+      })
+      .filter((cat) => cat.items.length > 0);
+  }, [categories, products, lang]);
 
   if (catIsLoading || productsLoading || wishlistIsLoading) return <Loading />;
   if (catError || productsError || wishlistError) return <ErrorPage />;
