@@ -251,12 +251,20 @@ const ProductCard = ({ Product, Love }: AppProduct) => {
               <FaShoppingCart />
               <span>{t("AddtoCart")}</span>
             </button>
+
             <button
               className="details-button"
               onClick={() => navigate(`/productDetails/${Product.id}`)}
             >
               <span>{t("More")}</span>
-              <FaArrowRight className="arrow-icon" />
+              <FaArrowRight
+                className="arrow-icon"
+                style={{
+                  transform: lang === "ar" ? "rotate(180deg)" : "rotate(0deg)",
+                  marginLeft: lang === "ar" ? "0" : "0.5rem",
+                  marginRight: lang === "ar" ? "0.5rem" : "0",
+                }}
+              />
             </button>
           </div>
         </div>

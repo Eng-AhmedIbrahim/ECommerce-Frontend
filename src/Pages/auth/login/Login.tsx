@@ -50,7 +50,7 @@ const SignIn = () => {
     skip: !userId,
   });
 
-  const {t,i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
 
   const [formData, setFormData] = useState({
@@ -235,51 +235,94 @@ const SignIn = () => {
                       </InputGroup>
                     </Form.Group>
 
-                    <Row className="mb-4">
-                      <Col md={6}>
-                        <Form.Check
-                          type="checkbox"
-                          name="rememberMe"
-                          label={
-                            <span
-                              className="text-secondary"
-                              style={{ fontSize: "0.9rem" }}
-                            >
-                              {t("RememberMe")}
-                            </span>
-                          }
-                          checked={formData.rememberMe}
-                          onChange={handleChange}
-                        />
+                    <Row className="mb-4 align-items-center">
+                      {/* Remember Me */}
+                      <Col
+                        md={6}
+                        className={
+                          lang === "ar"
+                            ? "d-flex justify-content-start"
+                            : "d-flex justify-content-start"
+                        }
+                      >
+                        <label
+                          className="d-flex align-items-center"
+                          style={{
+                            cursor: "pointer",
+                            direction: lang === "ar" ? "rtl" : "ltr",
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={formData.rememberMe}
+                            onChange={handleChange}
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              accentColor: "var(--link-color)",
+                              marginLeft: lang === "ar" ? "8px" : "0",
+                              marginRight: lang === "ar" ? "0" : "8px",
+                            }}
+                          />
+
+                          <span
+                            className="text-secondary"
+                            style={{ fontSize: "0.9rem", userSelect: "none" }}
+                          >
+                            {t("RememberMe")}
+                          </span>
+                        </label>
                       </Col>
-                      <Col md={6} className="text-end">
+
+                      {/* Forgot Password */}
+                      <Col
+                        md={6}
+                        className={lang === "ar" ? "text-start" : "text-end"}
+                      >
                         <Link
                           to="/forgot-password"
                           className="fw-bold forgot-password"
                           style={{ fontSize: "0.9rem" }}
                         >
-                          {t("ForgotPassword")}?
+                          {t("ForgotPassword")}
                         </Link>
                       </Col>
                     </Row>
 
                     <Button
                       type="submit"
-                      className="w-100 fw-bold custom-signin-button mb-4"
+                      className={`w-100 fw-bold custom-signin-button mb-4 d-flex justify-content-center align-items-center ${
+                        lang === "ar" ? "flex-row-reverse" : ""
+                      }`}
                       disabled={
                         Object.values(formErrors).some((e) => e !== "") ||
                         isLoading
                       }
                     >
-                      {isLoading ? "Signing In..." : "Sign In"}
+                      {isLoading
+                        ? lang === "ar"
+                          ? "جاري تسجيل الدخول..."
+                          : "Signing In..."
+                        : lang === "ar"
+                        ? "تسجيل الدخول"
+                        : "Sign In"}
+
                       <ArrowRightShort
                         size={20}
-                        className="ms-2 button-arrow"
+                        className={
+                          lang === "ar"
+                            ? "me-2 button-arrow"
+                            : "ms-2 button-arrow"
+                        }
+                        style={{
+                          transform: lang === "ar" ? "rotate(180deg)" : "none",
+                        }}
                       />
                     </Button>
 
                     <div className="text-center mt-4 mb-4">
-                      <span className="text-muted">{t("OrContinueWith")}:</span>
+                      <span className="text-muted">{t("OrContinueWith")} :</span>
                     </div>
 
                     <div className="d-flex justify-content-center gap-4 social-login-buttons">
@@ -306,7 +349,7 @@ const SignIn = () => {
                     className="text-center mt-4 mb-0 text-muted"
                     style={{ fontSize: "0.95rem" }}
                   >
-                    {t("Donthaveanaccount")}?{" "}
+                    {t("Donthaveanaccount")}{" "}
                     <Link
                       to="/signup"
                       className="fw-bold text-decoration-none forgot-password"

@@ -40,7 +40,8 @@ const IllustrationPlaceholder = () => (
 );
 
 const SignUp = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<
@@ -119,18 +120,27 @@ const SignUp = () => {
     if (target instanceof HTMLInputElement) {
       const { name, type, value, checked, files } = target;
 
+      // Checkbox
       if (type === "checkbox") {
         setFormData({ ...formData, [name]: checked });
-      } else if (type === "file" && files && files.length > 0) {
+      }
+
+      // File
+      else if (type === "file" && files && files.length > 0) {
         const file = files[0];
         setFormData({ ...formData, profilePicture: file });
+
         const reader = new FileReader();
         reader.onloadend = () => setPreview(reader.result as string);
         reader.readAsDataURL(file);
-      } else {
-        let newValue = value;
-        let newErrors = { ...formErrors };
+      }
 
+      // Text / Password / Tel / Email / Date etc.
+      else {
+        let newValue = value;
+        let newErrors: any = { ...formErrors };
+
+        // ---- Username Validation ----
         if (name === "userName") {
           if (/\s/.test(newValue)) {
             newErrors.userName = "Username cannot contain spaces.";
@@ -142,10 +152,41 @@ const SignUp = () => {
           }
         }
 
+        // ---- Password Validation ----
+        if (name === "password") {
+          if (newValue.length < 6) {
+            newErrors.password = "Password must be at least 6 characters.";
+          } else {
+            delete newErrors.password;
+          }
+
+          // Check confirmPassword live
+          if (
+            formData.confirmPassword &&
+            formData.confirmPassword !== newValue
+          ) {
+            newErrors.confirmPassword = "Passwords do not match.";
+          } else {
+            delete newErrors.confirmPassword;
+          }
+        }
+
+        // ---- Confirm Password Validation ----
+        if (name === "confirmPassword") {
+          if (newValue !== formData.password) {
+            newErrors.confirmPassword = "Passwords do not match.";
+          } else {
+            delete newErrors.confirmPassword;
+          }
+        }
+
         setFormData({ ...formData, [name]: newValue });
         setFormErrors(newErrors);
       }
-    } else if (
+    }
+
+    // ---- For Select or Textarea ----
+    else if (
       target instanceof HTMLSelectElement ||
       target instanceof HTMLTextAreaElement
     ) {
@@ -189,7 +230,6 @@ const SignUp = () => {
       document.body.appendChild(successPopup);
       setTimeout(() => successPopup.remove(), 2500);
 
-      // ✅ تنظيف البيانات
       setFormData({
         fullName: "",
         userName: "",
@@ -228,7 +268,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-page-container">
+    <div className={`signup-page-container ${lang === "ar" ? "rtl" : "ltr"}`}>
       <Container fluid className="p-0 h-100">
         <Row className="g-0 justify-content-center align-items-center h-100">
           <Col xs={11} sm={10} md={10} lg={9} xl={8}>
@@ -362,8 +402,17 @@ const SignUp = () => {
                               {formErrors.phoneNumber}
                             </div>
                           )}
-                          <InputGroup className="custom-input-group">
-                            <Phone className="custom-input-icon" />
+
+                          <InputGroup
+                            className={`custom-input-group ${
+                              lang === "ar" ? "flex-row-reverse" : ""
+                            }`}
+                            style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
+                          >
+                            <span className="custom-input-icon d-flex align-items-center px-2">
+                              <Phone />
+                            </span>
+
                             <Form.Control
                               type="tel"
                               name="phoneNumber"
@@ -371,6 +420,12 @@ const SignUp = () => {
                               value={formData.phoneNumber}
                               onChange={handleChange}
                               isInvalid={!!formErrors.phoneNumber}
+                              className={
+                                lang === "ar" ? "text-end" : "text-start"
+                              }
+                              style={{
+                                direction: lang === "ar" ? "rtl" : "ltr",
+                              }}
                             />
                           </InputGroup>
                         </div>
@@ -384,14 +439,25 @@ const SignUp = () => {
                               {formErrors.dateOfBirth}
                             </div>
                           )}
-                          <InputGroup className="custom-input-group date-input-group">
-                            <CalendarDate className="custom-input-icon" />
+                          <InputGroup
+                            className={`custom-input-group date-input-group ${
+                              lang === "ar" ? "flex-row-reverse" : ""
+                            }`}
+                            style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
+                          >
+                            <span className="custom-input-icon d-flex align-items-center px-2">
+                              <CalendarDate />
+                            </span>
+
                             <Form.Control
                               type="date"
                               name="dateOfBirth"
                               value={formData.dateOfBirth}
                               onChange={handleChange}
                               isInvalid={!!formErrors.dateOfBirth}
+                              className={
+                                lang === "ar" ? "text-end" : "text-start"
+                              }
                             />
                           </InputGroup>
                         </div>
@@ -477,14 +543,15 @@ const SignUp = () => {
                       className="w-100 fw-bold custom-signin-button mb-4"
                       disabled={Object.values(formErrors).some((e) => e !== "")}
                     >
-                      Create Account
+                      {t("CreateAccount")}
                       <ArrowLeftShort size={20} className="ms-2 button-arrow" />
                     </Button>
 
                     <div className="text-center mt-4 mb-4">
-                      <span className="text-muted">{t("OrContinueWith")}:</span>
+                      <span className="text-muted">
+                        {t("OrContinueWith")} :
+                      </span>
                     </div>
-
 
                     <div className="d-flex justify-content-center gap-4 social-login-buttons">
                       <Button
@@ -507,9 +574,9 @@ const SignUp = () => {
                     </div>
 
                     <p className="text-center mt-4 text-muted fs-7">
-                      {t("Alreadyhaveaccount")}?{" "}
+                      {t("Alreadyhaveaccount")}{" "}
                       <Link to="/login" className="fw-bold forgot-password">
-                        Login
+                        {t("Login")}
                       </Link>
                     </p>
                   </Form>

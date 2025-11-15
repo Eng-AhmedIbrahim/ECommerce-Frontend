@@ -1,5 +1,4 @@
 import i18n from "i18next";
-import { First } from "react-bootstrap/esm/PageItem";
 import { initReactI18next } from "react-i18next";
 
 const resources = {
@@ -37,9 +36,9 @@ const resources = {
       Signinyourjourney:"Sign in to your account and continue your journey",
       EmailAddress:"Email Address",
       RememberMe:"Remember Me",
-      ForgotPassword:"Forgot Password",
+      ForgotPassword:"Forgot Password?",
       OrContinueWith:"Or Continue With",
-      Donthaveanaccount:"Don't have an account",
+      Donthaveanaccount:"Don't have an account?",
       Signuphere:"Sign up here",
       CreateYourAccount:"Create Your Account",
       SigninyourjourneySignup:"Join Thousands Of Users And Start Your Amazing Journey Today!",
@@ -51,7 +50,7 @@ const resources = {
       ConfirmPassword:"Confirm Password",
       Iagreetothe:"I agree to the",
       TermsConditions:"Terms & Conditions",
-      Alreadyhaveaccount:"Already have an account",
+      Alreadyhaveaccount:"Already have an account?",
       Contact: "Contact",
       EnterEmail: "Enter Email",
       Firstname: "First name",
@@ -77,6 +76,9 @@ const resources = {
       SecurityCode: "Security code",
       CashOnDelivery: "Cash on Delivery (COD)",
       PayNow: "Pay now",
+      Password: "Password",
+      CreateAccount: "Create Account",
+      Login: "Login",
       
                     
 
@@ -116,9 +118,9 @@ const resources = {
       Signinyourjourney:"سجّل الدخول إلى حسابك وواصل رحلتك",
       EmailAddress:"البريد الإلكتروني",
       RememberMe:"تذكرني",
-      ForgotPassword:"هل نسيت كلمة المرور",
-      OrContinueWith:"أو تابع مع:",
-      Donthaveanaccount:"ليس لديك حساب",
+      ForgotPassword:"هل نسيت كلمة المرور؟",
+      OrContinueWith:"أو تابع مع",
+      Donthaveanaccount:"ليس لديك حساب؟",
       Signuphere:"سجل هنا",
       CreateYourAccount:"أنشئ حسابك",
       SigninyourjourneySignup:"انضم إلى آلاف المستخدمين وابدأ رحلتك المذهلة اليوم!",
@@ -130,7 +132,7 @@ const resources = {
       ConfirmPassword:"تأكيد كلمة المرور",
       Iagreetothe:"أوافق على",
       TermsConditions:"الشروط والأحكام",
-      Alreadyhaveaccount:"هل لديك حساب بالفعل",
+      Alreadyhaveaccount:"هل لديك حساب بالفعل؟",
       Contact: "التواصل",
       EnterEmail: "أدخل البريد الإلكتروني",
       Firstname: "الاسم الأول",
@@ -156,6 +158,9 @@ const resources = {
       SecurityCode: "رمز الأمان",
       CashOnDelivery: "الدفع عند الاستلام",
       PayNow: "ادفع الآن",
+      Password: "كلمة المرور",
+      CreateAccount: "إنشاء حساب",
+      Login: "تسجيل الدخول",
     },
   },
 };

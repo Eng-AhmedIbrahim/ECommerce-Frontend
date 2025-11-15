@@ -7,7 +7,8 @@
     var(--signIn-third-bg-color) 100%
   ) !important;
   min-height: 100vh;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   position: relative;
   overflow: hidden;
 }
@@ -964,11 +965,12 @@
   object-fit: contain;
 }
 
-.input-wrapper { position: relative; }
+.input-wrapper {
+  position: relative;
+}
 
 .error-popup {
   position: absolute;
-  left: 10px;
   bottom: calc(100% + 8px);
   top: auto;
   background: #ff4d4f;
@@ -977,12 +979,18 @@
   border-radius: 8px;
   font-size: 0.82rem;
   line-height: 1.25;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.16);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
   z-index: 50;
-  white-space: normal;        
-  max-width: 320px;         
-  word-break: break-word;   
+  white-space: normal;
+  max-width: 320px;
+  word-break: break-word;
   animation: fadeInPopup 0.18s ease-in-out;
+  text-align: left; /* LTR by default */
+}
+
+/* للـ RTL */
+.rtl .error-popup {
+  text-align: right;
 }
 
 .error-popup.multi {
@@ -992,14 +1000,24 @@
 .error-popup::after {
   content: "";
   position: absolute;
-  top: 100%;       
-  left: 18px;
+  top: 100%;
   width: 10px;
   height: 10px;
   background: #ff4d4f;
   transform: rotate(45deg);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
+
+/* السهم للـ LTR */
+.ltr .error-popup::after {
+  left: 18px;
+}
+
+/* السهم للـ RTL */
+.rtl .error-popup::after {
+  right: 18px;
+}
+
 
 .error-list {
   margin: 0;
@@ -1013,13 +1031,19 @@
 }
 
 @keyframes fadeInPopup {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .custom-input-group .form-control.is-invalid {
   border-color: #ff4d4f !important;
-  box-shadow: 0 0 0 4px rgba(244,77,79,0.08) !important;
+  box-shadow: 0 0 0 4px rgba(244, 77, 79, 0.08) !important;
 }
 
 .popup-message {
@@ -1046,7 +1070,8 @@
     opacity: 0;
     transform: translateX(-50%) translateY(-10px);
   }
-  10%, 90% {
+  10%,
+  90% {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
