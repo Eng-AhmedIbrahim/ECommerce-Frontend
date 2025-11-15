@@ -5,7 +5,7 @@ import type {
   Variant,
 } from "../../common/ProductTypes";
 import { Carousel } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaStar, FaRegStar, FaShippingFast } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useAppSelector, useAppDispatch } from "../../app/Hooks";
@@ -146,20 +146,6 @@ const ProductDetails = (): JSX.Element => {
       createdOn: r.createdOn ?? new Date().toISOString(),
     })) ?? []
   );
-
-  // const [reviews, setReviews] = useState<ProductReviewToReturnDto[]>([]);
-
-  // useEffect(() => {
-  //   console.log("Product Reviews:", Product?.productReviews);
-  //   if (Product?.productReviews) {
-  //     setReviews(
-  //       Product.productReviews.map((r) => ({
-  //         ...r,
-  //         createdOn: r.createdOn ?? new Date().toISOString(),
-  //       }))
-  //     );
-  //   }
-  // }, [Product]);
 
   const [userRating, setUserRating] = useState<number>(0);
   const [formData, setFormData] = useState<{ comment: string; rating: number }>(

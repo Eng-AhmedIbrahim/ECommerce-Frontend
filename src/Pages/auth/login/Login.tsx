@@ -22,6 +22,7 @@ import {
 } from "../../../Services/CartService";
 import { useAppDispatch, useAppSelector } from "../../../app/Hooks";
 import { clearCart, setCart } from "../../../features/cart/CartSlice";
+import { useTranslation } from "react-i18next";
 
 const IllustrationPlaceholder = () => (
   <div className="illustration-wrapper">
@@ -48,6 +49,9 @@ const SignIn = () => {
   const { data: cartDataFromServer, refetch } = useGetCartQuery(userId, {
     skip: !userId,
   });
+
+  const {t,i18n} = useTranslation();
+  const lang = i18n.language;
 
   const [formData, setFormData] = useState({
     email: "",
@@ -182,10 +186,10 @@ const SignIn = () => {
                     className="fw-bolder mb-3 text-center"
                     style={{ color: "#F03A37" }}
                   >
-                    Welcome Back!
+                    {t("WelcomeBack")}!
                   </h3>
                   <p className="text-muted mb-4 fs-6 text-center">
-                    Sign in to your account and continue your journey
+                    {t("Signinyourjourney")}
                   </p>
 
                   {loginError && (
@@ -205,7 +209,7 @@ const SignIn = () => {
                         <Form.Control
                           type="text"
                           name="email"
-                          placeholder="Email Address"
+                          placeholder={t("EmailAddress")}
                           value={formData.email}
                           onChange={handleChange}
                           isInvalid={!!formErrors.email}
@@ -223,7 +227,7 @@ const SignIn = () => {
                         <Form.Control
                           type="password"
                           name="password"
-                          placeholder="Password"
+                          placeholder={t("Password")}
                           value={formData.password}
                           onChange={handleChange}
                           isInvalid={!!formErrors.password}
@@ -241,7 +245,7 @@ const SignIn = () => {
                               className="text-secondary"
                               style={{ fontSize: "0.9rem" }}
                             >
-                              Remember me
+                              {t("RememberMe")}
                             </span>
                           }
                           checked={formData.rememberMe}
@@ -254,7 +258,7 @@ const SignIn = () => {
                           className="fw-bold forgot-password"
                           style={{ fontSize: "0.9rem" }}
                         >
-                          Forgot Password?
+                          {t("ForgotPassword")}?
                         </Link>
                       </Col>
                     </Row>
@@ -275,7 +279,7 @@ const SignIn = () => {
                     </Button>
 
                     <div className="text-center mt-4 mb-4">
-                      <span className="text-muted">Or Continue With:</span>
+                      <span className="text-muted">{t("OrContinueWith")}:</span>
                     </div>
 
                     <div className="d-flex justify-content-center gap-4 social-login-buttons">
@@ -302,12 +306,12 @@ const SignIn = () => {
                     className="text-center mt-4 mb-0 text-muted"
                     style={{ fontSize: "0.95rem" }}
                   >
-                    Don't have an account?{" "}
+                    {t("Donthaveanaccount")}?{" "}
                     <Link
                       to="/signup"
                       className="fw-bold text-decoration-none forgot-password"
                     >
-                      Sign up here
+                      {t("Signuphere")}
                     </Link>
                   </p>
                 </Col>

@@ -25,6 +25,8 @@ import { FaFacebookF } from "react-icons/fa";
 import logo from "../../../assets/minLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterApiMutation } from "../../../Services/AuthApi";
+import { useTranslation } from "react-i18next";
+
 import "../login/Login.css";
 
 const IllustrationPlaceholder = () => (
@@ -38,6 +40,7 @@ const IllustrationPlaceholder = () => (
 );
 
 const SignUp = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<
@@ -151,77 +154,6 @@ const SignUp = () => {
     }
   };
 
-  // Handle submit
-  //  const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   // Validate all fields before sending
-  //   const newErrors: Record<string, string> = {};
-  //   Object.entries(formData).forEach(([key, value]) => {
-  //     const err = validateField(key, value);
-  //     if (err) newErrors[key] = err;
-  //   });
-
-  //   if (Object.keys(newErrors).length > 0) {
-  //     setFormErrors(newErrors);
-  //     return; // ❌ متبعتش الريكوست طالما فيه أخطاء
-  //   }
-
-  //   // ✅ لو مفيش أخطاء نجهز البيانات للإرسال
-  //   const dataToSend = new FormData();
-  //   Object.entries(formData).forEach(([key, value]) => {
-  //     if (key === "confirmPassword" || value === null) return;
-  //     if (typeof value === "boolean")
-  //       dataToSend.append(key, value ? "true" : "false");
-  //     else if (value instanceof File) dataToSend.append(key, value, value.name);
-  //     else dataToSend.append(key, value as string);
-  //   });
-
-  //   try {
-  //     const data = await registerApi(dataToSend).unwrap();
-
-  //     // ✅ التسجيل نجح
-  //     setFormData({
-  //       fullName: "",
-  //       userName: "",
-  //       email: "",
-  //       phoneNumber: "",
-  //       dateOfBirth: "",
-  //       hasAcceptedTerms: false,
-  //       password: "",
-  //       confirmPassword: "",
-  //       profilePicture: null,
-  //     });
-  //     setFormErrors({});
-  //     setPreview(null);
-  //     formRef.current?.reset();
-
-  //     // ✅ عرض رسالة نجاح كبوب أب لطيف
-  //     const successPopup = document.createElement("div");
-  //     successPopup.textContent = "Registration successful 🎉";
-  //     successPopup.className = "popup-message success";
-  //     document.body.appendChild(successPopup);
-  //     setTimeout(() => successPopup.remove(), 3000);
-
-  //     console.log("Registration success:", data);
-  //   } catch (err: any) {
-  //     console.error("Registration failed:", err);
-
-  //     // ❌ لو الخطأ جاي من الباك إند
-  //     const errorMessage =
-  //       err?.status === 400 && err?.data?.message
-  //         ? err.data.message
-  //         : "Something went wrong, please try again later.";
-
-  //     // 💥 عرضه كبوب أب فوق الصفحة
-  //     const errorPopup = document.createElement("div");
-  //     errorPopup.textContent = errorMessage;
-  //     errorPopup.className = "popup-message error";
-  //     document.body.appendChild(errorPopup);
-  //     setTimeout(() => errorPopup.remove(), 4000);
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -307,17 +239,14 @@ const SignUp = () => {
                     className="fw-bolder mb-3 text-center"
                     style={{ color: "#F03A37" }}
                   >
-                    Create Your Account
+                    {t("CreateYourAccount")}
                   </h3>
                   <p className="text-muted mb-4 fs-6 text-center">
-                    Join Thousands Of Users And Start Your Amazing Journey
-                    Today!
+                    {t("SigninyourjourneySignup")}
                   </p>
 
                   <Form ref={formRef} onSubmit={handleSubmit}>
-                    {/* Profile Picture */}
                     <Form.Group className="d-flex justify-content-center mb-4 position-relative">
-                      {/* البوب أب لو فيه خطأ */}
                       {formErrors.profilePicture && (
                         <div className="error-popup text-center">
                           {formErrors.profilePicture}
@@ -342,7 +271,7 @@ const SignUp = () => {
                         ) : (
                           <div className="bg-light text-secondary d-flex flex-column align-items-center justify-content-center">
                             <Camera size={20} className="mb-1" />
-                            <small>Upload Photo</small>
+                            <small>{t("UploadPhoto")}</small>
                           </div>
                         )}
                       </div>
@@ -358,7 +287,6 @@ const SignUp = () => {
                     </Form.Group>
 
                     <Row className="g-2">
-                      {/* Full Name */}
                       <Col md={6}>
                         <div className="position-relative mb-3">
                           {formErrors.fullName && (
@@ -372,7 +300,7 @@ const SignUp = () => {
                             <Form.Control
                               type="text"
                               name="fullName"
-                              placeholder="Full Name"
+                              placeholder={t("FullName")}
                               value={formData.fullName}
                               onChange={handleChange}
                               isInvalid={!!formErrors.fullName}
@@ -381,7 +309,6 @@ const SignUp = () => {
                         </div>
                       </Col>
 
-                      {/* Username */}
                       <Col md={6}>
                         <div className="position-relative mb-3">
                           {formErrors.userName && (
@@ -395,7 +322,7 @@ const SignUp = () => {
                             <Form.Control
                               type="text"
                               name="userName"
-                              placeholder="User Name"
+                              placeholder={t("UserName")}
                               value={formData.userName}
                               onChange={handleChange}
                               isInvalid={!!formErrors.userName}
@@ -417,7 +344,7 @@ const SignUp = () => {
                             <Form.Control
                               type="email"
                               name="email"
-                              placeholder="Email Address"
+                              placeholder={t("EmailAddress")}
                               value={formData.email}
                               onChange={handleChange}
                               isInvalid={!!formErrors.email}
@@ -440,7 +367,7 @@ const SignUp = () => {
                             <Form.Control
                               type="tel"
                               name="phoneNumber"
-                              placeholder="Phone Number"
+                              placeholder={t("PhoneNumber")}
                               value={formData.phoneNumber}
                               onChange={handleChange}
                               isInvalid={!!formErrors.phoneNumber}
@@ -483,7 +410,7 @@ const SignUp = () => {
                             <Form.Control
                               type="password"
                               name="password"
-                              placeholder="Create Password"
+                              placeholder={t("CreatePassword")}
                               value={formData.password}
                               onChange={handleChange}
                               isInvalid={!!formErrors.password}
@@ -505,7 +432,7 @@ const SignUp = () => {
                             <Form.Control
                               type="password"
                               name="confirmPassword"
-                              placeholder="Confirm Password"
+                              placeholder={t("ConfirmPassword")}
                               value={formData.confirmPassword}
                               onChange={handleChange}
                               isInvalid={!!formErrors.confirmPassword}
@@ -533,9 +460,9 @@ const SignUp = () => {
                             className="text-secondary"
                             style={{ fontSize: "0.9rem" }}
                           >
-                            I agree to the{" "}
+                            {t("Iagreetothe")}{" "}
                             <a href="#" className="fw-bold forgot-password">
-                              Terms & Conditions
+                              {t("TermsConditions")}
                             </a>
                           </span>
                         }
@@ -545,7 +472,6 @@ const SignUp = () => {
                       />
                     </Form.Group>
 
-                    {/* Submit Button */}
                     <Button
                       type="submit"
                       className="w-100 fw-bold custom-signin-button mb-4"
@@ -555,9 +481,8 @@ const SignUp = () => {
                       <ArrowLeftShort size={20} className="ms-2 button-arrow" />
                     </Button>
 
-                    {/* Social login */}
                     <div className="text-center mt-4 mb-4">
-                      <span className="text-muted">Or Continue With:</span>
+                      <span className="text-muted">{t("OrContinueWith")}:</span>
                     </div>
 
 
@@ -582,7 +507,7 @@ const SignUp = () => {
                     </div>
 
                     <p className="text-center mt-4 text-muted fs-7">
-                      Already have an account?{" "}
+                      {t("Alreadyhaveaccount")}?{" "}
                       <Link to="/login" className="fw-bold forgot-password">
                         Login
                       </Link>

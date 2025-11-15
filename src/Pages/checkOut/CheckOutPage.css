@@ -50,7 +50,7 @@ select {
 
 input:focus,
 select:focus {
-  border-color: #1f80be;
+  border-color: var(--link-color);
   box-shadow: 0 0 0 3px rgba(31, 128, 190, 0.15);
   outline: none;
 }
@@ -66,13 +66,13 @@ select:focus {
   display: flex;
   align-items: center;
   font-size: 0.9rem;
-  color: #4b5563;
+  color: var(--link-color);
   gap: 8px;
   cursor: pointer;
 }
 
 .checkbox-label input {
-  accent-color: #1f80be;
+  accent-color: var(--link-color);
 }
 
 /* ====== Shipping Box ====== */
@@ -92,7 +92,7 @@ select:focus {
 
 .shipping-box .price {
   font-weight: 600;
-  color: #1f80be;
+  color: var(--link-color);
 }
 
 /* ====== Payment Options ====== */
@@ -108,11 +108,11 @@ select:focus {
 
 .payment-option:hover {
   background-color: var(--bg-color);
-  border-color: #1f80be;
+  border-color: var(--link-color);
 }
 
 .payment-option.active {
-  border: 2px solid #1f80be;
+  border: 2px solid var(--link-color);
     background-color: var(--bg-color);
 }
 
@@ -122,6 +122,12 @@ select:focus {
   align-items: center;
 }
 
+.option-info {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* مسافة بين الراديو والنص */
+}
+
 .option-header span {
   font-weight: 500;
 }
@@ -129,7 +135,7 @@ select:focus {
 .card-icons {
   display: flex;
   gap: 8px;
-  color: #2563eb;
+  color: var(--link-color);
 }
 
 .card-details input {
@@ -138,24 +144,40 @@ select:focus {
 
 /* ====== Pay Button ====== */
 .pay-button {
-  background-color: var(--bg-color);
+  background: linear-gradient(135deg, var(--link-color), var(--link-hover));
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+
   padding: 15px;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   width: 100%;
+
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   box-shadow: 0 4px 14px rgba(31, 128, 190, 0.25);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* لو حابب تحط آيكون */
 }
 
 .pay-button:hover {
-  background-color: var(--bg-color);
-  box-shadow: 0 6px 18px rgba(31, 128, 190, 0.35);
+  background: linear-gradient(135deg, var(--link-color), var(--link-hover));
+  box-shadow: 0 6px 22px rgba(31, 128, 190, 0.4);
   transform: translateY(-2px);
 }
+
+/* Optional (شكل أحسن لو الزرار disabled) */
+.pay-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 
 /* ====== Right Order Summary ====== */
 .order-summary {
@@ -174,7 +196,7 @@ select:focus {
   border-bottom: 1px solid #eee;
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: var(--link-color);
 }
 
 .order-item {
@@ -231,7 +253,7 @@ select:focus {
   margin-top: 10px;
   border-top: 1px solid #eee;
   padding-top: 10px;
-  color: #1f80be;
+  color: var(--link-color);
 }
 
 .savings {
@@ -309,13 +331,13 @@ select:focus {
 
 /* عند المرور أو التركيز */
 .section.delivery select:hover {
-  border-color: #1f80be;
+  border-color: var(--link-color);
   background-color: var(--bg-color);
 }
 
 .section.delivery select:focus {
   outline: none;
-  border-color: #1f80be;
+  border-color: var(--link-color);
   box-shadow: 0 0 0 2px rgba(31, 128, 190, 0.15);
   background-color: var(--bg-color);
 }
@@ -401,7 +423,7 @@ select::-ms-expand {
 
 .address-list li:hover {
   background-color: var(--bg-color);
-  border-color: #1f80be;
+  border-color: var(--link-color);
 }
 
 .dialog-buttons {
@@ -421,7 +443,7 @@ select::-ms-expand {
 }
 
 .dialog-buttons button:first-child {
-  background: #1f80be;
+  background: var(--link-color);
   color: white;
 }
 
@@ -440,7 +462,7 @@ select::-ms-expand {
 }
 
 .section.payment h2 {
-  color: #1f80be;
+  color: var(--link-color);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
@@ -464,13 +486,13 @@ select::-ms-expand {
 }
 
 .payment-option:hover {
-  border-color: #1f80be;
+  border-color: var(--link-color);
   background-color: var(--bg-color);
   transform: translateY(-1px);
 }
 
 .payment-option.active {
-  border-color: #1f80be;
+  border-color: var(--link-color);
   background-color: var(--bg-color);
   box-shadow: 0 3px 10px rgba(31, 128, 190, 0.15);
 }
@@ -490,7 +512,7 @@ select::-ms-expand {
 }
 
 .option-header input[type="radio"] {
-  accent-color: #1f80be;
+  accent-color: var(--link-color);
 }
 
 .option-header span {
@@ -498,11 +520,6 @@ select::-ms-expand {
   color: #1a1a1a;
 }
 
-.card-icons {
-  display: flex;
-  gap: 8px;
-  color: #1f80be;
-}
 
 /* ====== Card Details Fields ====== */
 .card-details {
@@ -522,7 +539,7 @@ select::-ms-expand {
 }
 
 .card-details input:focus {
-  border-color: #1f80be;
+  border-color: var(--link-color);
   box-shadow: 0 0 0 2px rgba(31, 128, 190, 0.1);
   outline: none;
 }
@@ -531,4 +548,11 @@ select::-ms-expand {
 .card-details > div {
   display: flex;
   gap: 10px;
+}
+
+
+input[type="radio"] {
+  width: 20px !important;
+  height: 20px !important; 
+  margin: 10px;
 }

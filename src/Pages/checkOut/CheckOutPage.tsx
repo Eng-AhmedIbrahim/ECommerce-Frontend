@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import "./CheckOutPage.css";
 
 const CheckOutPage: React.FC = () => {
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     email: "",
     firstName: "",
@@ -10,10 +12,11 @@ const CheckOutPage: React.FC = () => {
     company: "",
     address: "",
     apartment: "",
+    state: "",
     city: "",
     country: "Egypt",
     phone: "",
-    secondPhone:"",
+    secondPhone: "",
     paymentMethod: "card",
   });
 
@@ -47,11 +50,11 @@ const CheckOutPage: React.FC = () => {
       <form onSubmit={handleSubmit} className="checkout-form">
         {/* Contact */}
         <div className="section">
-          <h2>Contact</h2>
+          <h2>{t("Contact")}</h2>
           <input
             type="email"
             name="email"
-            placeholder="Enter Email"
+            placeholder={t("EnterEmail")}
             value={form.email}
             onChange={handleChange}
             required
@@ -60,16 +63,16 @@ const CheckOutPage: React.FC = () => {
 
         {/* Delivery */}
         <div className="section">
-          <h2>Delivery</h2>
-          <select name="country" value={form.country} onChange={handleChange}>
-            <option value="Egypt">Egypt</option>
-          </select>
+          <h2>{t("Delivery")}</h2>
+          {/* <select name="country" value={form.country} onChange={handleChange}>
+            <option value="Egypt">{t("Egypt")}</option>
+          </select> */}
 
           <div className="">
             <input
               type="text"
               name="firstName"
-              placeholder="First name"
+              placeholder={t("Firstname")}
               value={form.firstName}
               onChange={handleChange}
               required
@@ -77,7 +80,7 @@ const CheckOutPage: React.FC = () => {
             <input
               type="text"
               name="lastName"
-              placeholder="Last name"
+              placeholder={t("Lastname")}
               value={form.lastName}
               onChange={handleChange}
               required
@@ -87,7 +90,7 @@ const CheckOutPage: React.FC = () => {
           <input
             type="text"
             name="company"
-            placeholder="Company (optional)"
+            placeholder={t("Company")}
             value={form.company}
             onChange={handleChange}
           />
@@ -100,14 +103,14 @@ const CheckOutPage: React.FC = () => {
               className="select-address-btn"
               onClick={() => setShowAddressDialog(true)}
             >
-              Select Saved Address
+              {t("SelectSavedAddress")}
             </button>
           </div>
 
           <input
             type="text"
             name="address"
-            placeholder="Address"
+            placeholder={t("AddressDetails")}
             value={form.address}
             onChange={handleChange}
             required
@@ -116,7 +119,7 @@ const CheckOutPage: React.FC = () => {
           <input
             type="text"
             name="apartment"
-            placeholder="Apartment, suite, etc. (optional)"
+            placeholder={t("Appartment")}
             value={form.apartment}
             onChange={handleChange}
           />
@@ -124,8 +127,16 @@ const CheckOutPage: React.FC = () => {
           <div className="">
             <input
               type="text"
+              name="state"
+              placeholder={t("State")}
+              value={form.state}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
               name="city"
-              placeholder="City"
+              placeholder={t("City")}
               value={form.city}
               onChange={handleChange}
               required
@@ -133,15 +144,15 @@ const CheckOutPage: React.FC = () => {
             <input
               type="text"
               name="phone"
-              placeholder="Phone"
+              placeholder={t("PhoneNumber")}
               value={form.phone}
               onChange={handleChange}
               required
             />
-             <input
+            <input
               type="text"
               name="phone"
-              placeholder="Second Phone *Optional"
+              placeholder={t("SecondPhone")}
               value={form.secondPhone}
               onChange={handleChange}
             />
@@ -150,19 +161,17 @@ const CheckOutPage: React.FC = () => {
 
         {/* Shipping */}
         <div className="section">
-          <h2>Shipping method</h2>
+          <h2>{t("Shippingmethod")}</h2>
           <div className="shipping-box">
-            <span>Standard</span>
+            <span>{t("Standard")}</span>
             <span className="price">£85.00</span>
           </div>
         </div>
 
         {/* Payment */}
         <div className="section.payment">
-          <h2>Payment</h2>
-          <p className="info-text">
-            All transactions are secure and encrypted.
-          </p>
+          <h2>{t("Payment")}</h2>
+          <p className="info-text">{t("Alltransactionssecure")}.</p>
 
           {/* Card Option */}
           <div
@@ -172,14 +181,15 @@ const CheckOutPage: React.FC = () => {
             onClick={() => setForm({ ...form, paymentMethod: "card" })}
           >
             <div className="option-header">
-              <div>
+              <div className="option-info">
                 <input
                   type="radio"
                   checked={form.paymentMethod === "card"}
                   readOnly
                 />
-                <span>Credit card</span>
+                <span>{t("Creditcard")}</span>
               </div>
+
               <div className="card-icons">
                 <FaCcVisa size={26} />
                 <FaCcMastercard size={26} />
@@ -188,12 +198,12 @@ const CheckOutPage: React.FC = () => {
 
             {form.paymentMethod === "card" && (
               <div className="card-details">
-                <input type="text" placeholder="Card number" />
+                <input type="text" placeholder={t("CardNumber")} />
                 <div className="">
-                  <input type="text" placeholder="Expiration date (MM/YY)" />
-                  <input type="text" placeholder="Security code" />
+                  <input type="text" placeholder={t("ExpirationDate")} />
+                  <input type="text" placeholder={t("SecurityCode")} />
                 </div>
-                <input type="text" placeholder="Name on card" />
+                <input type="text" placeholder={t("NameOnCard")} />
               </div>
             )}
           </div>
@@ -210,12 +220,12 @@ const CheckOutPage: React.FC = () => {
               checked={form.paymentMethod === "cod"}
               readOnly
             />
-            <span>Cash on Delivery (COD)</span>
+            <span style={{ fontWeight: "800",fontSize: "1rem" }}>{t("CashOnDelivery")}</span>
           </div>
         </div>
 
         <button type="submit" className="pay-button">
-          Pay now
+          {t("PayNow")}
         </button>
       </form>
 
