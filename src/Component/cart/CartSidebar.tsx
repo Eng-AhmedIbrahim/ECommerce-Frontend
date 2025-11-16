@@ -129,6 +129,10 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     }
   };
 
+  const handelCheckout = () => {
+    handleClose();
+    navigate("/checkout");
+  };
   // ✅ حذف منتج
   const handleRemoveItem = async (itemId: number) => {
     if (!cart) return;
@@ -301,7 +305,7 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
               <button
                 className="cart-create-btn"
-                onClick={() => navigate("/checkout")}
+                onClick={handelCheckout}
               >
                 {lang === "ar" ? "إنشاء الطلب" : "Check Out"}
               </button>

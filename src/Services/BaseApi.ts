@@ -7,8 +7,8 @@ import { logoutAction, setCredentials } from "../features/auth/AuthSlice";
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://localhost:7019/api",
-  // baseUrl:"https://menemsiteapi.tryasp.net/api",
+  // baseUrl: "https://localhost:7019/api",
+  baseUrl:"https://menemsiteapi.tryasp.net/api",
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("accessToken");

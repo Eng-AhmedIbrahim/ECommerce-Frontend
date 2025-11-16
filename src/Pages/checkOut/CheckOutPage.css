@@ -196,7 +196,7 @@ select:focus {
   border-bottom: 1px solid #eee;
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
-  color: var(--link-color);
+  /* color: #ff0000; */
 }
 
 .order-item {
@@ -223,6 +223,7 @@ select:focus {
 .item-name {
   font-weight: 600;
   font-size: 0.95rem;
+  color: var(--link-color);
 }
 
 .item-details {
@@ -502,7 +503,6 @@ select::-ms-expand {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8rem;
 }
 
 .option-header div {
@@ -555,4 +555,20 @@ input[type="radio"] {
   width: 20px !important;
   height: 20px !important; 
   margin: 10px;
+}
+
+
+.order-summary .order-item .item-image {
+  width: 80px; /* أو أي عرض مناسب */
+  height: 80px; /* أو أي ارتفاع مناسب */
+  overflow: hidden;
+  border-radius: 8px; /* اختياري لتدوير الأطراف */
+  flex-shrink: 0; /* لمنعها من التصغير */
+}
+
+.order-summary .order-item .item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* أهم حاجة هنا */
+  display: block;
 }

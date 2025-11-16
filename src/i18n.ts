@@ -68,7 +68,6 @@ const resources = {
       AddressDetails: "Address Details",
       Standard: "Standard",
       Payment: "Payment",
-      Alltransactionssecure:"All transactions are secure and encrypted",
       Creditcard:"Credit Card",
       NameOnCard: "Name on card",
       CardNumber: "Card number",
@@ -79,6 +78,12 @@ const resources = {
       Password: "Password",
       CreateAccount: "Create Account",
       Login: "Login",
+      OrderSummary: "Order Summary",
+      Quantity: "Quantity",
+      Subtotal: "Subtotal",
+      Shipping: "Shipping",
+      Total: "Total",
+      Alltransactionssecure:"Choose your payment method",
       
                     
 
@@ -150,7 +155,7 @@ const resources = {
       AddressDetails: "تفاصيل العنوان",
       Standard: "الشحن ",
       Payment: "الدفع",
-      Alltransactionssecure:"جميع المعاملات آمنة ومشفرة",
+      Alltransactionssecure:"اختر طريقة الدفع الخاصة بك",
       Creditcard:"بطاقة ائتمان",
       NameOnCard: "الاسم على البطاقة",
       CardNumber: "رقم البطاقة",
@@ -161,6 +166,11 @@ const resources = {
       Password: "كلمة المرور",
       CreateAccount: "إنشاء حساب",
       Login: "تسجيل الدخول",
+      OrderSummary: "ملخص الطلب",
+      Quantity: "الكمية",
+      Subtotal: "المجموع الفرعي",
+      Shipping: "الشحن",
+      Total: "المجموع",
     },
   },
 };

@@ -1,10 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./CheckOutPage.css";
+import { useAppSelector } from "../../app/Hooks";
+import type { Cart } from "../../common/CartTypes";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+  useMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
+// TypeScript-safe icon fix
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+const defaultIcon = L.icon({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+  iconSize: [35, 45],
+  iconAnchor: [17, 45],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+L.Marker.prototype.options.icon = defaultIcon;
+
+// لتحديث مركز الخريطة عند تغيير الموقع
+const RecenterMap = ({ lat, lng }: { lat: number; lng: number }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView([lat, lng], 15);
+  }, [lat, lng, map]);
+  return null;
+};
+
+const reverseGeocode = async (lat: number, lng: number) => {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+
+  const res = await fetch(url, {
+    headers: {
+      "User-Agent": "MenemWebSite/1.0 (roma2001342@gmail.com)",
+    },
+  });
+
+  const data = await res.json();
+
+  if (!data?.address) return null;
+
+  const address = data.address;
+
+  const fullAddress = [
+    address.house_number,
+    address.road,
+    address.neighbourhood,
+    address.city_district,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+    console.log("Reverse Geocode Result:", data);
+    
+  return {
+    address: fullAddress || address.country || "",
+    street: address.road || "",
+    city: address.city || address.town || address.village || "",
+    state: address.state || address.county || "",
+  };
+};
 const CheckOutPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
+
+  const userCart = useAppSelector((state) => state.cartSlice) as Cart;
+
+  const [location, setLocation] = useState<{ lat: number; lng: number }>({
+    lat: 30.0444,
+    lng: 31.2357,
+  });
+
   const [form, setForm] = useState({
     email: "",
     firstName: "",
@@ -20,6 +99,7 @@ const CheckOutPage: React.FC = () => {
     paymentMethod: "card",
   });
 
+  const [shipping, setShipping] = useState(85);
   const [showAddressDialog, setShowAddressDialog] = useState(false);
 
   const savedAddresses = [
@@ -36,7 +116,9 @@ const CheckOutPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Order submitted successfully!");
+    alert(
+      `Order submitted successfully!\nAddress: ${form.address}\nLat: ${location.lat}, Lng: ${location.lng}`
+    );
   };
 
   const handleSelectAddress = (address: string) => {
@@ -44,11 +126,100 @@ const CheckOutPage: React.FC = () => {
     setShowAddressDialog(false);
   };
 
+  // Component لتحديد الموقع على الخريطة (بالنقر أو السحب)
+  const LocationMarker = () => {
+    useMapEvents({
+      click: async (e) => {
+        const { lat, lng } = e.latlng;
+        setLocation({ lat, lng });
+
+        // جلب بيانات العنوان وتحديث حقول النموذج
+        const details = await reverseGeocode(lat, lng);
+        if (details) {
+          setForm((prevForm) => ({
+            ...prevForm,
+            address: details.address,
+            city: details.city || "",
+            state: details.state || "",
+          }));
+        }
+      },
+    });
+
+    return (
+      <Marker
+        position={[location.lat, location.lng]}
+        draggable={true}
+        eventHandlers={{
+          dragend: async (e) => {
+            const pos = e.target.getLatLng();
+            setLocation({ lat: pos.lat, lng: pos.lng });
+
+            // جلب بيانات العنوان وتحديث حقول النموذج عند الانتهاء من السحب
+            const details = await reverseGeocode(pos.lat, pos.lng);
+            if (details) {
+              setForm((prevForm) => ({
+                ...prevForm,
+                address: details.address,
+                city: details.city || "",
+                state: details.state || "",
+              }));
+            }
+          },
+        }}
+      >
+        <Popup>
+          Lat: {location.lat.toFixed(5)}, Lng: {location.lng.toFixed(5)}
+        </Popup>
+      </Marker>
+    );
+  };
+
+  // **التعديل هنا:** جلب الموقع الحالي للمستخدم وتعبئة العنوان تلقائيًا
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+
+          // 1. تحديث الموقع
+          setLocation({ lat, lng });
+
+          // 2. جلب تفاصيل العنوان
+          const details = await reverseGeocode(lat, lng);
+
+          // 3. تحديث حقول النموذج بالعنوان المسترجع
+          if (details) {
+            setForm((prevForm) => ({
+              ...prevForm,
+              address: details.address,
+              city: details.city || "",
+              state: details.state || "",
+            }));
+          }
+        },
+        (err) => {
+          console.log("Geolocation error:", err);
+          // يمكن هنا إضافة إشعار للمستخدم بأن تحديد الموقع فشل
+        }
+      );
+    }
+  }, []); // تشغيل مرة واحدة عند تحميل الصفحة
+
+  // زرار لجلب الإحداثيات الحالية (للاختبار)
+  const handleGetCoordinates = () => {
+    alert(
+      `Current Coordinates:\nLat: ${location.lat}\nLng: ${location.lng}\nAddress: ${form.address}`
+    );
+  };
+
   return (
     <div className="checkout-container">
-      {/* Left Section */}
+      {/* Left Section (Form) */}
       <form onSubmit={handleSubmit} className="checkout-form">
         {/* Contact */}
+        {/* ... (بقية حقول الاتصال) ... */}
         <div className="section">
           <h2>{t("Contact")}</h2>
           <input
@@ -64,10 +235,6 @@ const CheckOutPage: React.FC = () => {
         {/* Delivery */}
         <div className="section">
           <h2>{t("Delivery")}</h2>
-          {/* <select name="country" value={form.country} onChange={handleChange}>
-            <option value="Egypt">{t("Egypt")}</option>
-          </select> */}
-
           <div className="">
             <input
               type="text"
@@ -97,7 +264,7 @@ const CheckOutPage: React.FC = () => {
 
           {/* Address Section */}
           <div className="address-header">
-            <label>Address</label>
+            <h2>{t("Address")}</h2>
             <button
               type="button"
               className="select-address-btn"
@@ -106,6 +273,40 @@ const CheckOutPage: React.FC = () => {
               {t("SelectSavedAddress")}
             </button>
           </div>
+
+          <div
+            className="map-container"
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              height: "400px",
+              marginTop: "10px",
+              borderRadius: "10px",
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            }}
+          >
+            <MapContainer
+              center={[location.lat, location.lng]}
+              zoom={15}
+              style={{ width: "100%", height: "100%" }}
+              scrollWheelZoom={true}
+              zoomControl={true}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <LocationMarker />
+              {/* RecenterMap مهم لضمان تحديث عرض الخريطة عند تحديد الموقع الأولي */}
+              <RecenterMap lat={location.lat} lng={location.lng} />
+            </MapContainer>
+          </div>
+
+          <button
+            type="button"
+            style={{ marginTop: "10px" }}
+            onClick={handleGetCoordinates}
+          >
+            {t("GetCurrentCoordinates")}
+          </button>
 
           <input
             type="text"
@@ -151,7 +352,7 @@ const CheckOutPage: React.FC = () => {
             />
             <input
               type="text"
-              name="phone"
+              name="secondPhone"
               placeholder={t("SecondPhone")}
               value={form.secondPhone}
               onChange={handleChange}
@@ -159,16 +360,8 @@ const CheckOutPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Shipping */}
-        <div className="section">
-          <h2>{t("Shippingmethod")}</h2>
-          <div className="shipping-box">
-            <span>{t("Standard")}</span>
-            <span className="price">£85.00</span>
-          </div>
-        </div>
-
-        {/* Payment */}
+        {/* Payment Section */}
+        {/* ... (بقية قسم الدفع) ... */}
         <div className="section.payment">
           <h2>{t("Payment")}</h2>
           <p className="info-text">{t("Alltransactionssecure")}.</p>
@@ -220,7 +413,9 @@ const CheckOutPage: React.FC = () => {
               checked={form.paymentMethod === "cod"}
               readOnly
             />
-            <span style={{ fontWeight: "800",fontSize: "1rem" }}>{t("CashOnDelivery")}</span>
+            <span style={{ fontWeight: "600", fontSize: "1rem" }}>
+              {t("CashOnDelivery")}
+            </span>
           </div>
         </div>
 
@@ -229,69 +424,107 @@ const CheckOutPage: React.FC = () => {
         </button>
       </form>
 
-      {/* Right Section */}
-      <div className="order-summary">
-        <h3>Order summary</h3>
-        {[1, 2, 3].map((item) => (
-          <div key={item} className="order-item">
-            <div className="item-info">
-              <div className="item-image" />
-              <div>
-                <p className="item-name">The Mask On S362</p>
-                <p className="item-details">Silver / M</p>
+      {/* Right Section (Order Summary) */}
+      {/* ... (بقية ملخص الطلب) ... */}
+      <div className={`order-summary ${lang === "ar" ? "rtl" : "ltr"}`}>
+        <h3>{t("OrderSummary")}</h3>
+
+        {userCart.items.map((item) => (
+          <div key={item.productId} className="order-item">
+            <div
+              className="item-info d-flex"
+              style={{ flexDirection: lang === "ar" ? "row" : "row" }}
+            >
+              <div className="item-image">
+                <img
+                  src={item.imageUrl}
+                  alt={lang === "ar" ? item.productNameAr : item.productName}
+                />
+              </div>
+              <div className={lang === "ar" ? "text-end" : "text-start"}>
+                <p className="item-name">
+                  {lang === "ar" ? item.productNameAr : item.productName}
+                </p>
+                {item.selectedVariants && (
+                  <p className="item-details">
+                    {Object.entries(item.selectedVariants).map(
+                      ([variantName, options]) => (
+                        <span key={variantName}>
+                          {lang === "ar"
+                            ? variantName.split(",")[0]
+                            : variantName.split(",")[1]}
+                          : {lang === "ar" ? options[0] : options[1]}{" "}
+                        </span>
+                      )
+                    )}
+                  </p>
+                )}
+                <p className="item-quantity">
+                  {t("Quantity")} : {item.quantity.toLocaleString("ar-EG")}
+                </p>
               </div>
             </div>
-            <p className="price">£1,245.00</p>
+            <p
+              className="price"
+              style={{ textAlign: lang === "ar" ? "right" : "left" }}
+            >
+              {item.price.toLocaleString(lang === "ar" ? "ar-EG" : "en-US")}{" "}
+              {lang === "ar" ? "جنيه" : "EGP"}
+            </p>
           </div>
         ))}
 
         <div className="summary-totals">
-          <div>
-            <span>Subtotal</span>
-            <span>£12,460.00</span>
+          <div className="d-flex justify-content-between">
+            <span>{t("Subtotal")}</span>
+            <span>
+              {userCart.subTotal.toLocaleString(
+                lang === "ar" ? "ar-EG" : "en-US"
+              )}{" "}
+              {lang === "ar" ? "جنيه" : "EGP"}
+            </span>
           </div>
-          <div>
-            <span>Shipping</span>
-            <span>£85.00</span>
+          <div className="d-flex justify-content-between">
+            <span>{t("Shipping")}</span>
+            <span>
+              {shipping.toLocaleString(lang === "ar" ? "ar-EG" : "en-US")}{" "}
+              {lang === "ar" ? "جنيه" : "EGP"}
+            </span>
           </div>
-          <div className="total">
-            <span>Total</span>
-            <span>£12,575.00</span>
+          {userCart.discountTotal && (
+            <div className="d-flex justify-content-between">
+              <span>{t("Discount")}</span>
+              <span>
+                -
+                {userCart.discountTotal.toLocaleString(
+                  lang === "ar" ? "ar-EG" : "en-US"
+                )}{" "}
+                {lang === "ar" ? "جنيه" : "EGP"}
+              </span>
+            </div>
+          )}
+          <div className="total d-flex justify-content-between fw-bold">
+            <span>{t("Total")}</span>
+            <span>
+              {userCart.grandTotal.toLocaleString(
+                lang === "ar" ? "ar-EG" : "en-US"
+              )}{" "}
+              {lang === "ar" ? "جنيه" : "EGP"}
+            </span>
           </div>
-          <p className="savings">TOTAL SAVINGS £12,245.00</p>
+          {userCart.discountTotal && (
+            <p
+              className={`savings ${lang === "ar" ? "text-end" : "text-start"}`}
+            >
+              {t("TotalSavings")}{" "}
+              {userCart.discountTotal.toLocaleString(
+                lang === "ar" ? "ar-EG" : "en-US"
+              )}{" "}
+              {lang === "ar" ? "جنيه" : "EGP"}
+            </p>
+          )}
         </div>
       </div>
-
-      {/* Address Dialog */}
-      {showAddressDialog && (
-        <div className="dialog-overlay">
-          <div className="dialog">
-            <h3>Select a Saved Address</h3>
-            <ul className="address-list">
-              {savedAddresses.map((addr, index) => (
-                <li key={index} onClick={() => handleSelectAddress(addr)}>
-                  {addr}
-                </li>
-              ))}
-            </ul>
-            <div className="dialog-buttons">
-              <button
-                type="button"
-                onClick={() => alert("Add new address clicked")}
-              >
-                Add New Address
-              </button>
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() => setShowAddressDialog(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
