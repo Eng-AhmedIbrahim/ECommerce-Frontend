@@ -64,8 +64,8 @@ const reverseGeocode = async (lat: number, lng: number) => {
     .filter(Boolean)
     .join(", ");
 
-    console.log("Reverse Geocode Result:", data);
-    
+  console.log("Reverse Geocode Result:", data);
+
   return {
     address: fullAddress || address.country || "",
     street: address.road || "",
@@ -177,35 +177,41 @@ const CheckOutPage: React.FC = () => {
 
   // **التعديل هنا:** جلب الموقع الحالي للمستخدم وتعبئة العنوان تلقائيًا
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-
-          // 1. تحديث الموقع
-          setLocation({ lat, lng });
-
-          // 2. جلب تفاصيل العنوان
-          const details = await reverseGeocode(lat, lng);
-
-          // 3. تحديث حقول النموذج بالعنوان المسترجع
-          if (details) {
-            setForm((prevForm) => ({
-              ...prevForm,
-              address: details.address,
-              city: details.city || "",
-              state: details.state || "",
-            }));
-          }
-        },
-        (err) => {
-          console.log("Geolocation error:", err);
-          // يمكن هنا إضافة إشعار للمستخدم بأن تحديد الموقع فشل
-        }
-      );
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
     }
-  }, []); // تشغيل مرة واحدة عند تحميل الصفحة
+
+    // يطلب الموقع عند الدخول على الصفحة
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        // تحديث الموقع في state
+        setLocation({ lat, lng });
+
+        // جلب تفاصيل العنوان من الـ API
+        const details = await reverseGeocode(lat, lng);
+        if (details) {
+          setForm((prevForm) => ({
+            ...prevForm,
+            address: details.address,
+            city: details.city || "",
+            state: details.state || "",
+          }));
+        }
+      },
+      (err) => {
+        if (err.code === 1) {
+          // المستخدم رفض السماح بالموقع
+          alert("يرجى السماح بالوصول إلى الموقع لتحديد عنوانك تلقائيًا.");
+        } else {
+          console.log("Geolocation error:", err);
+        }
+      }
+    );
+  }, []);
 
   // زرار لجلب الإحداثيات الحالية (للاختبار)
   const handleGetCoordinates = () => {
