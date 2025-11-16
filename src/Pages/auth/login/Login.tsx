@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -39,16 +39,36 @@ const SignIn = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const cartSlice = useAppSelector((state) => state.cartSlice);
-
   const params = new URLSearchParams(location.search);
   const redirect = params.get("redirect") || "/";
   const [userId, setUserId] = useState<string>("");
 
-  const [loginApi, { isLoading }] = useLoginApiMutation();
-  const [addToCart] = useAddToCartMutation();
-  const { data: cartDataFromServer, refetch } = useGetCartQuery(userId, {
+  const { refetch: fetchCartByUserId } = useGetCartQuery(userId, {
     skip: !userId,
   });
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchCart = async () => {
+      try {
+        const result = await fetchCartByUserId();
+        const serverCart = result?.data;
+        if (serverCart) {
+          dispatch(clearCart());
+          localStorage.setItem("cart", JSON.stringify(serverCart));
+          dispatch(setCart(serverCart));
+        }
+      } catch (error) {
+        console.error("Failed to fetch cart:", error);
+      }
+    };
+
+    fetchCart();
+  }, [userId, dispatch, fetchCartByUserId]);
+
+  const [loginApi, { isLoading }] = useLoginApiMutation();
+  const [addToCart] = useAddToCartMutation();
 
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
@@ -86,7 +106,6 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // التحقق من الفورم
     const newErrors: Record<string, string> = {};
     Object.entries(formData).forEach(([key, value]) => {
       const err = validateField(key, value);
@@ -134,24 +153,13 @@ const SignIn = () => {
               }
             })
           );
-
           console.log("✅ Cart synced successfully");
         } catch (err) {
           console.error("❌ Error syncing cart:", err);
         }
       }
 
-      console.log("Login successful:", cartSlice);
-
       setUserId(result.userId);
-      const response = await refetch();
-      const serverCart = response?.data;
-
-      dispatch(clearCart());
-      if (serverCart) {
-        localStorage.setItem("cart", JSON.stringify(serverCart));
-        dispatch(setCart(serverCart));
-      }
 
       const successPopup = document.createElement("div");
       successPopup.textContent = "Login successful 🎉";
@@ -161,6 +169,7 @@ const SignIn = () => {
 
       navigate(redirect);
     } catch (err: any) {
+      console.log("Login error:", err);
       const failedPopup = document.createElement("div");
       failedPopup.textContent =
         "Login Failed ❌ Incorrect Username or Password";
@@ -204,7 +213,10 @@ const SignIn = () => {
                       {formErrors.email && (
                         <div className="error-popup">{formErrors.email}</div>
                       )}
-                      <InputGroup className="custom-input-group">
+                      <InputGroup
+                        className="custom-input-group"
+                        style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
+                      >
                         <Envelope className="custom-input-icon" />
                         <Form.Control
                           type="text"
@@ -213,6 +225,9 @@ const SignIn = () => {
                           value={formData.email}
                           onChange={handleChange}
                           isInvalid={!!formErrors.email}
+                          style={{
+                            textAlign: lang === "ar" ? "right" : "left",
+                          }}
                         />
                       </InputGroup>
                     </Form.Group>
@@ -222,7 +237,10 @@ const SignIn = () => {
                       {formErrors.password && (
                         <div className="error-popup">{formErrors.password}</div>
                       )}
-                      <InputGroup className="custom-input-group">
+                      <InputGroup
+                        className="custom-input-group"
+                        style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
+                      >
                         <Lock className="custom-input-icon" />
                         <Form.Control
                           type="password"
@@ -231,19 +249,22 @@ const SignIn = () => {
                           value={formData.password}
                           onChange={handleChange}
                           isInvalid={!!formErrors.password}
+                          style={{
+                            textAlign: lang === "ar" ? "right" : "left",
+                          }}
                         />
                       </InputGroup>
                     </Form.Group>
 
+                    {/* Remember Me & Forgot Password */}
                     <Row className="mb-4 align-items-center">
-                      {/* Remember Me */}
                       <Col
                         md={6}
-                        className={
-                          lang === "ar"
-                            ? "d-flex justify-content-start"
-                            : "d-flex justify-content-start"
-                        }
+                        className="d-flex"
+                        style={{
+                          justifyContent:
+                            lang === "ar" ? "flex-start" : "flex-start",
+                        }}
                       >
                         <label
                           className="d-flex align-items-center"
@@ -265,7 +286,6 @@ const SignIn = () => {
                               marginRight: lang === "ar" ? "0" : "8px",
                             }}
                           />
-
                           <span
                             className="text-secondary"
                             style={{ fontSize: "0.9rem", userSelect: "none" }}
@@ -275,7 +295,6 @@ const SignIn = () => {
                         </label>
                       </Col>
 
-                      {/* Forgot Password */}
                       <Col
                         md={6}
                         className={lang === "ar" ? "text-start" : "text-end"}
@@ -289,60 +308,6 @@ const SignIn = () => {
                         </Link>
                       </Col>
                     </Row>
-
-                    <Button
-                      type="submit"
-                      className={`w-100 fw-bold custom-signin-button mb-4 d-flex justify-content-center align-items-center ${
-                        lang === "ar" ? "flex-row-reverse" : ""
-                      }`}
-                      disabled={
-                        Object.values(formErrors).some((e) => e !== "") ||
-                        isLoading
-                      }
-                    >
-                      {isLoading
-                        ? lang === "ar"
-                          ? "جاري تسجيل الدخول..."
-                          : "Signing In..."
-                        : lang === "ar"
-                        ? "تسجيل الدخول"
-                        : "Sign In"}
-
-                      <ArrowRightShort
-                        size={20}
-                        className={
-                          lang === "ar"
-                            ? "me-2 button-arrow"
-                            : "ms-2 button-arrow"
-                        }
-                        style={{
-                          transform: lang === "ar" ? "rotate(180deg)" : "none",
-                        }}
-                      />
-                    </Button>
-
-                    <div className="text-center mt-4 mb-4">
-                      <span className="text-muted">{t("OrContinueWith")} :</span>
-                    </div>
-
-                    <div className="d-flex justify-content-center gap-4 social-login-buttons">
-                      <Button
-                        variant="outline-light"
-                        className="social-icon-button google"
-                        onClick={() => console.log("Google Login")}
-                        title="Sign in with Google"
-                      >
-                        <FcGoogle size={26} />
-                      </Button>
-                      <Button
-                        variant="outline-light"
-                        className="social-icon-button facebook"
-                        onClick={() => console.log("Facebook Login")}
-                        title="Sign in with Facebook"
-                      >
-                        <FaFacebookF size={26} style={{ color: "#b92121ff" }} />
-                      </Button>
-                    </div>
                   </Form>
 
                   <p

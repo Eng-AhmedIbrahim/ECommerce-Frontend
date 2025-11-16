@@ -9,13 +9,11 @@ import {
   TileLayer,
   Marker,
   Popup,
-  useMapEvents,
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// TypeScript-safe icon fix
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -102,12 +100,6 @@ const CheckOutPage: React.FC = () => {
   const [shipping, setShipping] = useState(85);
   const [showAddressDialog, setShowAddressDialog] = useState(false);
 
-  const savedAddresses = [
-    "15 Tahrir St, Cairo, Egypt",
-    "25 ElMokattam St, Cairo, Egypt",
-    "8 Corniche Rd, Alexandria, Egypt",
-  ];
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -121,77 +113,79 @@ const CheckOutPage: React.FC = () => {
     );
   };
 
-  const handleSelectAddress = (address: string) => {
-    setForm({ ...form, address });
-    setShowAddressDialog(false);
-  };
-
   // Component لتحديد الموقع على الخريطة (بالنقر أو السحب)
-  const LocationMarker = () => {
-    useMapEvents({
-      click: async (e) => {
-        const { lat, lng } = e.latlng;
-        setLocation({ lat, lng });
+  // const LocationMarker = () => {
+  //   useMapEvents({
+  //     click: async (e) => {
+  //       const { lat, lng } = e.latlng;
+  //       setLocation({ lat, lng });
 
-        // جلب بيانات العنوان وتحديث حقول النموذج
-        const details = await reverseGeocode(lat, lng);
-        if (details) {
-          setForm((prevForm) => ({
-            ...prevForm,
-            address: details.address,
-            city: details.city || "",
-            state: details.state || "",
-          }));
-        }
-      },
-    });
+  //       // جلب بيانات العنوان وتحديث حقول النموذج
+  //       const details = await reverseGeocode(lat, lng);
+  //       if (details) {
+  //         setForm((prevForm) => ({
+  //           ...prevForm,
+  //           address: details.address,
+  //           city: details.city || "",
+  //           state: details.state || "",
+  //         }));
+  //       }
+  //     },
+  //   });
 
+  //   return (
+  //     <Marker
+  //       position={[location.lat, location.lng]}
+  //       draggable={true}
+  //       eventHandlers={{
+  //         dragend: async (e) => {
+  //           const pos = e.target.getLatLng();
+  //           setLocation({ lat: pos.lat, lng: pos.lng });
+
+  //           const details = await reverseGeocode(pos.lat, pos.lng);
+  //           if (details) {
+  //             setForm((prevForm) => ({
+  //               ...prevForm,
+  //               address: details.address,
+  //               city: details.city || "",
+  //               state: details.state || "",
+  //             }));
+  //           }
+  //         },
+  //       }}
+  //     >
+  //       <Popup>
+  //         Lat: {location.lat.toFixed(5)}, Lng: {location.lng.toFixed(5)}
+  //       </Popup>
+  //     </Marker>
+  //   );
+  // };
+
+  const LocationMarker = ({ lat, lng }: { lat: number; lng: number }) => {
     return (
-      <Marker
-        position={[location.lat, location.lng]}
-        draggable={true}
-        eventHandlers={{
-          dragend: async (e) => {
-            const pos = e.target.getLatLng();
-            setLocation({ lat: pos.lat, lng: pos.lng });
-
-            // جلب بيانات العنوان وتحديث حقول النموذج عند الانتهاء من السحب
-            const details = await reverseGeocode(pos.lat, pos.lng);
-            if (details) {
-              setForm((prevForm) => ({
-                ...prevForm,
-                address: details.address,
-                city: details.city || "",
-                state: details.state || "",
-              }));
-            }
-          },
-        }}
-      >
+      <Marker position={[lat, lng]}>
         <Popup>
-          Lat: {location.lat.toFixed(5)}, Lng: {location.lng.toFixed(5)}
+          Lat: {lat.toFixed(5)}, Lng: {lng.toFixed(5)}
         </Popup>
       </Marker>
     );
   };
 
-  // **التعديل هنا:** جلب الموقع الحالي للمستخدم وتعبئة العنوان تلقائيًا
   useEffect(() => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
       return;
     }
 
-    // يطلب الموقع عند الدخول على الصفحة
+    // يطلب إذن الموقع عند دخول الصفحة
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        // تحديث الموقع في state
+        // تحديث المارك والموقع
         setLocation({ lat, lng });
 
-        // جلب تفاصيل العنوان من الـ API
         const details = await reverseGeocode(lat, lng);
         if (details) {
           setForm((prevForm) => ({
@@ -204,7 +198,6 @@ const CheckOutPage: React.FC = () => {
       },
       (err) => {
         if (err.code === 1) {
-          // المستخدم رفض السماح بالموقع
           alert("يرجى السماح بالوصول إلى الموقع لتحديد عنوانك تلقائيًا.");
         } else {
           console.log("Geolocation error:", err);
@@ -214,18 +207,46 @@ const CheckOutPage: React.FC = () => {
   }, []);
 
   // زرار لجلب الإحداثيات الحالية (للاختبار)
-  const handleGetCoordinates = () => {
-    alert(
-      `Current Coordinates:\nLat: ${location.lat}\nLng: ${location.lng}\nAddress: ${form.address}`
+  const handleGetCoordinates = async () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        setLocation({ lat, lng });
+
+        const details = await reverseGeocode(lat, lng);
+        if (details) {
+          setForm((prevForm) => ({
+            ...prevForm,
+            address: details.address,
+            city: details.city || "",
+            state: details.state || "",
+          }));
+        }
+
+        alert(
+          `Current Coordinates:\nLat: ${lat}\nLng: ${lng}\nAddress: ${details?.address}`
+        );
+      },
+      (err) => {
+        if (err.code === 1) {
+          alert("يرجى السماح بالوصول إلى الموقع.");
+        } else {
+          console.log("Geolocation error:", err);
+        }
+      }
     );
   };
 
   return (
     <div className="checkout-container">
-      {/* Left Section (Form) */}
       <form onSubmit={handleSubmit} className="checkout-form">
-        {/* Contact */}
-        {/* ... (بقية حقول الاتصال) ... */}
         <div className="section">
           <h2>{t("Contact")}</h2>
           <input
@@ -238,23 +259,14 @@ const CheckOutPage: React.FC = () => {
           />
         </div>
 
-        {/* Delivery */}
         <div className="section">
           <h2>{t("Delivery")}</h2>
           <div className="">
             <input
               type="text"
               name="firstName"
-              placeholder={t("Firstname")}
+              placeholder={t("FullName")}
               value={form.firstName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder={t("Lastname")}
-              value={form.lastName}
               onChange={handleChange}
               required
             />
@@ -300,8 +312,7 @@ const CheckOutPage: React.FC = () => {
               zoomControl={true}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <LocationMarker />
-              {/* RecenterMap مهم لضمان تحديث عرض الخريطة عند تحديد الموقع الأولي */}
+              <LocationMarker lat={location.lat} lng={location.lng} />
               <RecenterMap lat={location.lat} lng={location.lng} />
             </MapContainer>
           </div>
@@ -311,7 +322,7 @@ const CheckOutPage: React.FC = () => {
             style={{ marginTop: "10px" }}
             onClick={handleGetCoordinates}
           >
-            {t("GetCurrentCoordinates")}
+            Get Current Location
           </button>
 
           <input
