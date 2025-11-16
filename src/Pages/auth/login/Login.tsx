@@ -52,7 +52,7 @@ const SignIn = () => {
 
     const fetchCart = async () => {
       try {
-        const result = await fetchCartByUserId();
+        const result = await fetchCartByUserId(); 
         const serverCart = result?.data;
         if (serverCart) {
           dispatch(clearCart());
@@ -159,7 +159,7 @@ const SignIn = () => {
         }
       }
 
-      setUserId(result.userId);
+      setUserId(result.userId); 
 
       const successPopup = document.createElement("div");
       successPopup.textContent = "Login successful 🎉";
@@ -208,15 +208,11 @@ const SignIn = () => {
                   )}
 
                   <Form onSubmit={handleSubmit}>
-                    {/* Email */}
                     <Form.Group className="mb-4 position-relative">
                       {formErrors.email && (
                         <div className="error-popup">{formErrors.email}</div>
                       )}
-                      <InputGroup
-                        className="custom-input-group"
-                        style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
-                      >
+                      <InputGroup className="custom-input-group">
                         <Envelope className="custom-input-icon" />
                         <Form.Control
                           type="text"
@@ -225,22 +221,15 @@ const SignIn = () => {
                           value={formData.email}
                           onChange={handleChange}
                           isInvalid={!!formErrors.email}
-                          style={{
-                            textAlign: lang === "ar" ? "right" : "left",
-                          }}
                         />
                       </InputGroup>
                     </Form.Group>
 
-                    {/* Password */}
                     <Form.Group className="mb-4 position-relative">
                       {formErrors.password && (
                         <div className="error-popup">{formErrors.password}</div>
                       )}
-                      <InputGroup
-                        className="custom-input-group"
-                        style={{ direction: lang === "ar" ? "rtl" : "ltr" }}
-                      >
+                      <InputGroup className="custom-input-group">
                         <Lock className="custom-input-icon" />
                         <Form.Control
                           type="password"
@@ -249,22 +238,18 @@ const SignIn = () => {
                           value={formData.password}
                           onChange={handleChange}
                           isInvalid={!!formErrors.password}
-                          style={{
-                            textAlign: lang === "ar" ? "right" : "left",
-                          }}
                         />
                       </InputGroup>
                     </Form.Group>
 
-                    {/* Remember Me & Forgot Password */}
                     <Row className="mb-4 align-items-center">
                       <Col
                         md={6}
-                        className="d-flex"
-                        style={{
-                          justifyContent:
-                            lang === "ar" ? "flex-start" : "flex-start",
-                        }}
+                        className={
+                          lang === "ar"
+                            ? "d-flex justify-content-start"
+                            : "d-flex justify-content-start"
+                        }
                       >
                         <label
                           className="d-flex align-items-center"
@@ -286,6 +271,7 @@ const SignIn = () => {
                               marginRight: lang === "ar" ? "0" : "8px",
                             }}
                           />
+
                           <span
                             className="text-secondary"
                             style={{ fontSize: "0.9rem", userSelect: "none" }}
@@ -308,6 +294,62 @@ const SignIn = () => {
                         </Link>
                       </Col>
                     </Row>
+
+                    <Button
+                      type="submit"
+                      className={`w-100 fw-bold custom-signin-button mb-4 d-flex justify-content-center align-items-center ${
+                        lang === "ar" ? "flex-row-reverse" : ""
+                      }`}
+                      disabled={
+                        Object.values(formErrors).some((e) => e !== "") ||
+                        isLoading
+                      }
+                    >
+                      {isLoading
+                        ? lang === "ar"
+                          ? "جاري تسجيل الدخول..."
+                          : "Signing In..."
+                        : lang === "ar"
+                        ? "تسجيل الدخول"
+                        : "Sign In"}
+
+                      <ArrowRightShort
+                        size={20}
+                        className={
+                          lang === "ar"
+                            ? "me-2 button-arrow"
+                            : "ms-2 button-arrow"
+                        }
+                        style={{
+                          transform: lang === "ar" ? "rotate(180deg)" : "none",
+                        }}
+                      />
+                    </Button>
+
+                    <div className="text-center mt-4 mb-4">
+                      <span className="text-muted">
+                        {t("OrContinueWith")} :
+                      </span>
+                    </div>
+
+                    <div className="d-flex justify-content-center gap-4 social-login-buttons">
+                      <Button
+                        variant="outline-light"
+                        className="social-icon-button google"
+                        onClick={() => console.log("Google Login")}
+                        title="Sign in with Google"
+                      >
+                        <FcGoogle size={26} />
+                      </Button>
+                      <Button
+                        variant="outline-light"
+                        className="social-icon-button facebook"
+                        onClick={() => console.log("Facebook Login")}
+                        title="Sign in with Facebook"
+                      >
+                        <FaFacebookF size={26} style={{ color: "#b92121ff" }} />
+                      </Button>
+                    </div>
                   </Form>
 
                   <p
