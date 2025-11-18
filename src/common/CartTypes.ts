@@ -1,3 +1,5 @@
+import type { SelectedVariantData } from "./ProductTypes";
+
 export type CartItem = {
   id?:number;
   productId: number;
@@ -6,7 +8,7 @@ export type CartItem = {
   imageUrl: string;
   price: number;
   quantity: number;
-  selectedVariants?: Record<string, string[]>;
+  selectedVariants?: Record<string, SelectedVariantData>;
   originalPrice?: number;
   discountPercentage?: number;
 };

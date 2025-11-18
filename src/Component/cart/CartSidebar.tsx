@@ -276,7 +276,7 @@ const CartSidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                                 :
                               </strong>{" "}
                               <span>
-                                {lang === "ar" ? options[0] : options[1]}{" "}
+                                {lang === "ar" ? options.arabicName : options.englishName}{" "}
                               </span>
                             </div>
                           )

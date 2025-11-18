@@ -1,13 +1,22 @@
 import React, { useState, useMemo } from "react";
 import { FaTimes } from "react-icons/fa";
-import type { Variant, AppProduct } from "../../../common/ProductTypes";
+import type {
+  Variant,
+  AppProduct,
+  SelectedVariantData,
+} from "../../../common/ProductTypes";
 import "./VariantDialog.css";
 import { useTranslation } from "react-i18next";
 
 type VariantDialogProps = {
   product: AppProduct["Product"];
   onClose: () => void;
-  onConfirm: (variants: Record<string, string[]>) => void;
+  onConfirm: (
+    variants: Record<
+      string,
+      { arabicName: string; englishName: string; price: number }
+    >
+  ) => void;
 };
 
 const VariantDialog: React.FC<VariantDialogProps> = ({
@@ -16,7 +25,7 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
   onConfirm,
 }) => {
   const [selectedVariants, setSelectedVariants] = useState<
-    Record<string, string[]>
+    Record<string, SelectedVariantData>
   >({});
 
   const [_, lang] = useTranslation();
@@ -34,13 +43,20 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
     return groups;
   }, [product, lang.language]);
 
-  const handleSelectVariant = (attr: string, variant: Variant) => {
+  const handleSelectVariant = (
+    combinedAttrKey: string,
+    variant: Variant,
+    variantPrice: number
+  ) => {
     setSelectedVariants((prev) => ({
       ...prev,
-      [attr]: [variant.arabicValue, variant.englishValue],
+      [combinedAttrKey]: {
+        arabicName: variant.arabicValue,
+        englishName: variant.englishValue,
+        price: variantPrice,
+      },
     }));
   };
-
   const handleConfirm = () => {
     if (
       Object.keys(selectedVariants).length < Object.keys(groupedVariants).length
@@ -66,7 +82,6 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
             <FaTimes />
           </button>
         </div>
-
         <div className="variant-dialog-body">
           {Object.keys(groupedVariants).length > 0 ? (
             Object.entries(groupedVariants).map(([attr, variants]) => (
@@ -75,10 +90,11 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
                 <div className="variant-options">
                   {variants.map((v) => {
                     const selected = selectedVariants[attr];
+
                     const isSelected =
                       selected &&
-                      selected[0] === v.arabicValue &&
-                      selected[1] === v.englishValue;
+                      selected.arabicName === v.arabicValue &&
+                      selected.englishName === v.englishValue;
                     return (
                       <button
                         key={v.id}
@@ -88,13 +104,19 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
                         onClick={() =>
                           handleSelectVariant(
                             `${v.attributeArabicName},${v.attributeEnglishName}`,
-                            v
+                            v,
+                            v.price
                           )
                         }
                       >
                         {lang.language === "en"
                           ? v.englishValue
                           : v.arabicValue}
+
+                        <span className="variant-price">
+                          &nbsp;({v.price.toFixed(2)}{" "}
+                          {lang.language === "ar" ? "ج.م." : "LE"})
+                        </span>
                       </button>
                     );
                   })}
@@ -109,7 +131,6 @@ const VariantDialog: React.FC<VariantDialogProps> = ({
             </p>
           )}
         </div>
-
         <div className="variant-dialog-footer">
           <button className="confirm-btn" onClick={handleConfirm}>
             {lang.language === "ar" ? "تأكيد الإضافة" : "Confirm"}

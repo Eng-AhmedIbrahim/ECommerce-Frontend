@@ -49,3 +49,10 @@ export interface ProductReviewToReturnDto {
   userName :string;
   userAvatar : string;
 }
+
+
+export type SelectedVariantData = {
+  arabicName: string; 
+  englishName: string;
+  price: number;
+};

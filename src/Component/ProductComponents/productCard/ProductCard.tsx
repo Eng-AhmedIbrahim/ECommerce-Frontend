@@ -14,7 +14,10 @@ import {
   useAddToWishListApiMutation,
   useRemoveFromWishListApiMutation,
 } from "../../../Services/WishlistApi";
-import type { AppProduct } from "../../../common/ProductTypes";
+import type {
+  AppProduct,
+  SelectedVariantData,
+} from "../../../common/ProductTypes";
 import { addItemToCart } from "../../../features/cart/CartSlice";
 import type { CartItem } from "../../../common/CartTypes";
 import VariantDialog from "../../Dialogs/variantDialog/VariantDialog";
@@ -129,10 +132,9 @@ const ProductCard = ({ Product, Love }: AppProduct) => {
     lang,
   ]);
 
-  // 🛒 Handle Cart
   const [showVariantDialog, setShowVariantDialog] = useState(false);
   const [selectedVariants, setSelectedVariants] = useState<
-    Record<string, string[]>
+    Record<string, SelectedVariantData>
   >({});
 
   const addToCart = async (item: CartItem) => {
@@ -174,9 +176,11 @@ const ProductCard = ({ Product, Love }: AppProduct) => {
       productNameAr: Product.arabicName ?? "",
       imageUrl: Product.images?.[0] ?? "",
       quantity: 1,
-      selectedVariants,
+      selectedVariants: selectedVariants,
+
       originalPrice: Product.price ?? 0,
       discountPercentage: Product.discountPercentage ?? 0,
+
       price:
         (Product.price ?? 0) -
         ((Product.price ?? 0) * (Product.discountPercentage ?? 0)) / 100,
@@ -185,9 +189,20 @@ const ProductCard = ({ Product, Love }: AppProduct) => {
     addToCart(newItem);
   }, [Product, selectedVariants, addToCart]);
 
-  const handleVariantSelectionDone = (variants: Record<string, string[]>) => {
+  const handleVariantSelectionDone = (
+    variants: Record<string, SelectedVariantData>
+  ) => {
     setSelectedVariants(variants);
     setShowVariantDialog(false);
+
+    let calculatedPrice = 0;
+
+    let variantsPrice = 0;
+    Object.values(variants).forEach((variantData) => {
+      variantsPrice += variantData.price;
+    });
+
+    calculatedPrice = variantsPrice;
 
     const newItem: CartItem = {
       productId: Product.id,
@@ -196,11 +211,11 @@ const ProductCard = ({ Product, Love }: AppProduct) => {
       imageUrl: Product.images?.[0] ?? "",
       quantity: 1,
       selectedVariants: variants,
+
       originalPrice: Product.price ?? 0,
       discountPercentage: Product.discountPercentage ?? 0,
-      price:
-        (Product.price ?? 0) -
-        ((Product.price ?? 0) * (Product.discountPercentage ?? 0)) / 100,
+
+      price: calculatedPrice,
     };
 
     addToCart(newItem);
