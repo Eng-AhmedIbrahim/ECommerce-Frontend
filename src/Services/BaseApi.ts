@@ -11,7 +11,9 @@ const baseQuery = fetchBaseQuery({
   baseUrl:"https://menemsiteapi.tryasp.net/api",
   credentials: "include",
   prepareHeaders: (headers) => {
-    const token = localStorage.getItem("accessToken");
+    const token =
+      localStorage.getItem("accessToken") ||
+      sessionStorage.getItem("accessToken");
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
@@ -43,6 +45,7 @@ export const BaseApi = async (
           {
             url: "/auth/refresh-token",
             method: "POST",
+            // body: { refreshToken },
           },
           api,
           extraOptions
@@ -61,7 +64,13 @@ export const BaseApi = async (
             })
           );
 
-          localStorage.setItem("accessToken", responseData.token);
+          const isRememberMeActive = localStorage.getItem("accessToken");
+
+          if (isRememberMeActive) {
+            localStorage.setItem("accessToken", responseData.token);
+          } else {
+            sessionStorage.setItem("accessToken", responseData.token);
+          }
 
           if (refreshedHeaderToken) {
             sessionStorage.setItem("refreshToken", refreshedHeaderToken);
