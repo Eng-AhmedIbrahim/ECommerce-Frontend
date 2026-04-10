@@ -30,6 +30,7 @@
     "react-map-gl": "^8.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.3",
+    "recharts": "^3.5.1",
     "redux-persist": "^6.0.0",
     "remixicon-react": "^1.0.0",
     "yup": "^1.7.1"

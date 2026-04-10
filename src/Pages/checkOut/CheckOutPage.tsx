@@ -4,19 +4,16 @@ import { useTranslation } from "react-i18next";
 import "./CheckOutPage.css";
 import { useAppSelector } from "../../app/Hooks";
 import type { Cart } from "../../common/CartTypes";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { useGetBranchesQuery } from "../../Services/branchServices/GetBranchsService";
+import Loading from "../../helpersComponents/loading/Loading";
+import ErrorBoundry from "../../error/ErrorBoundry";
 
 const defaultIcon = L.icon({
   iconUrl: markerIcon,
@@ -29,7 +26,6 @@ const defaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = defaultIcon;
 
-// لتحديث مركز الخريطة عند تغيير الموقع
 const RecenterMap = ({ lat, lng }: { lat: number; lng: number }) => {
   const map = useMap();
   useEffect(() => {
@@ -77,10 +73,11 @@ const CheckOutPage: React.FC = () => {
 
   const userCart = useAppSelector((state) => state.cartSlice) as Cart;
 
-  const [location, setLocation] = useState<{ lat: number; lng: number }>({
-    lat: 30.0444,
-    lng: 31.2357,
-  });
+  const { isLoading, isError, error } = useGetBranchesQuery();
+  const branches = useAppSelector((state) => state.brancheSlice);
+  console.log("Branches from Redux Store:", branches);
+
+  const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
   const [form, setForm] = useState({
     email: "",
@@ -95,6 +92,7 @@ const CheckOutPage: React.FC = () => {
     phone: "",
     secondPhone: "",
     paymentMethod: "card",
+    branch: "",
   });
 
   const [shipping, setShipping] = useState(85);
@@ -109,7 +107,9 @@ const CheckOutPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(
-      `Order submitted successfully!\nAddress: ${form.address}\nLat: ${location.lat}, Lng: ${location.lng}`
+      `Order submitted successfully!\nAddress: ${form.address}\nLat: ${
+        location?.lat ?? 0
+      }, Lng: ${location?.lng ?? 0}`
     );
   };
 
@@ -244,6 +244,15 @@ const CheckOutPage: React.FC = () => {
     );
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    console.error("Error fetching branches:", error);
+    return <ErrorBoundry />;
+  }
+
   return (
     <div className="checkout-container">
       <form onSubmit={handleSubmit} className="checkout-form">
@@ -305,15 +314,18 @@ const CheckOutPage: React.FC = () => {
             }}
           >
             <MapContainer
-              center={[location.lat, location.lng]}
+              center={[location?.lat ?? 0, location?.lng ?? 0]}
               zoom={15}
               style={{ width: "100%", height: "100%" }}
               scrollWheelZoom={true}
               zoomControl={true}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <LocationMarker lat={location.lat} lng={location.lng} />
-              <RecenterMap lat={location.lat} lng={location.lng} />
+              <LocationMarker
+                lat={location?.lat ?? 0}
+                lng={location?.lng ?? 0}
+              />
+              <RecenterMap lat={location?.lat ?? 0} lng={location?.lng ?? 0} />
             </MapContainer>
           </div>
 
@@ -325,55 +337,66 @@ const CheckOutPage: React.FC = () => {
             Get Current Location
           </button>
 
-          <input
-            type="text"
-            name="address"
-            placeholder={t("AddressDetails")}
-            value={form.address}
-            onChange={handleChange}
-            required
-          />
+          <div className="address-fields">
+            <select className="custom-select">
+              <option value="">{t("SelectBranch")}</option>
+              {Object.values(branches).map((branch) => (
+                <option key={branch.id} value={branch.id}>
+                  {branch.name}
+                </option>
+              ))}
+            </select>
 
-          <input
-            type="text"
-            name="apartment"
-            placeholder={t("Appartment")}
-            value={form.apartment}
-            onChange={handleChange}
-          />
+            <input
+              type="text"
+              name="address"
+              placeholder={t("AddressDetails")}
+              value={form.address}
+              onChange={handleChange}
+              required
+            />
 
-          <div className="">
             <input
               type="text"
-              name="state"
-              placeholder={t("State")}
-              value={form.state}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder={t("City")}
-              value={form.city}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="phone"
-              placeholder={t("PhoneNumber")}
-              value={form.phone}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="secondPhone"
-              placeholder={t("SecondPhone")}
-              value={form.secondPhone}
+              name="apartment"
+              placeholder={t("Appartment")}
+              value={form.apartment}
               onChange={handleChange}
             />
+
+            <div className="">
+              <input
+                type="text"
+                name="state"
+                placeholder={t("State")}
+                value={form.state}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                name="city"
+                placeholder={t("City")}
+                value={form.city}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder={t("PhoneNumber")}
+                value={form.phone}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                name="secondPhone"
+                placeholder={t("SecondPhone")}
+                value={form.secondPhone}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
 
@@ -470,7 +493,10 @@ const CheckOutPage: React.FC = () => {
                           {lang === "ar"
                             ? variantName.split(",")[0]
                             : variantName.split(",")[1]}
-                          : {lang === "ar" ? options[0] : options[1]}{" "}
+                          :{" "}
+                          {lang === "ar"
+                            ? options.arabicName
+                            : options.englishName}{" "}
                         </span>
                       )
                     )}

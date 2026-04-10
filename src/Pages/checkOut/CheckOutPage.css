@@ -572,3 +572,51 @@ input[type="radio"] {
   object-fit: cover; /* أهم حاجة هنا */
   display: block;
 }
+
+.address-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* مسافة بين الحقول */
+  margin-top: 1rem;
+}
+
+.address-fields input,
+.address-fields select {
+  flex: 1 1 100%; /* ياخد كامل العرض على الموبايل */
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.address-fields input:focus,
+.address-fields select:focus {
+  border: 1px solid #1f80be;
+  box-shadow: 0 0 5px rgba(31, 128, 190, 0.5);
+}
+
+/* حقول مزدوجة في نفس السطر (state, city, phone) */
+.address-fields .double-field {
+  flex: 1 1 calc(50% - 0.5rem); /* نص العرض مع فجوة */
+}
+
+/* Select الخاص بالفروع */
+.custom-select {
+  flex: 1 1 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.custom-select:focus {
+  border: 1px solid #1f80be;
+  box-shadow: 0 0 5px rgba(31, 128, 190, 0.5);
+}

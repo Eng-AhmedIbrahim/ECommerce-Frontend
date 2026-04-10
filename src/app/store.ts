@@ -6,12 +6,14 @@ import productData from "../features/product/ProductSlice";
 import authSlice from "../features/auth/AuthSlice";
 import whislistSlice from "../features/wishlist/WishList";
 import cartSlice from "../features/cart/CartSlice";
+import brancheSlice from "../features/branch/BranchSlice";
 
 import { ProductApi } from "../Services/Product";
 import { CategoryApi } from "../Services/Category";
 import { AuthApi } from "../Services/AuthApi";
 import { WishlistApi } from "../Services/WishlistApi";
 import { CartService } from "../Services/CartService";
+import { GetBranchsService } from "../Services/branchServices/GetBranchsService";
 
 const persistConfig = {
   key: "root",
@@ -24,11 +26,13 @@ const rootReducer = combineReducers({
   authSlice,
   whislistSlice,
   cartSlice,
+  brancheSlice,
   [ProductApi.reducerPath]: ProductApi.reducer,
   [CategoryApi.reducerPath]: CategoryApi.reducer,
   [AuthApi.reducerPath]: AuthApi.reducer,
   [WishlistApi.reducerPath]: WishlistApi.reducer,
   [CartService.reducerPath]: CartService.reducer,
+  [GetBranchsService.reducerPath]: GetBranchsService.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -44,7 +48,8 @@ export const store = configureStore({
       .concat(CategoryApi.middleware)
       .concat(AuthApi.middleware)
       .concat(WishlistApi.middleware)
-      .concat(CartService.middleware),
+      .concat(CartService.middleware)
+      .concat(GetBranchsService.middleware),
 });
 
 export const persistor = persistStore(store);

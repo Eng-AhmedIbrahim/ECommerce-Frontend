@@ -3,6 +3,7 @@ import ErrorBoundry from "../../error/ErrorBoundry";
 import Product from "../product/Product";
 
 const Home = () => {
+
   return (
     <>
       <ErrorBoundry>

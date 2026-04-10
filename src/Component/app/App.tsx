@@ -11,6 +11,7 @@ import WishlistPage from "../../Pages/wishlist/Wishlist";
 import Loading from "../../helpersComponents/loading/Loading";
 import ErrorBoundry from "../../error/ErrorBoundry";
 import CheckOutWrapper from "../../helpersComponents/CheckOutWrapper";
+import Dashboard from "../../Pages/dashboard/Dashboard";
 
 // ✅ Lazy Imports
 const Home = lazy(() => import("../../Pages/home/Home"));
@@ -136,7 +137,16 @@ function App() {
                               }
                             />
                           </Route>
-                        </Route>
+
+                            <Route
+                              path="/dashboard"
+                              element={
+                                <ErrorBoundry>
+                                  <Dashboard />
+                                </ErrorBoundry>
+                              }
+                            />
+                          </Route>
 
                         <Route
                           element={
